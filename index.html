@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BMGS - Descargas y Tutoriales Oficiales</title>
+    <title>BMGS - Descargas y Tutorial Oficial</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +19,7 @@
             --text-main: #f8fafc;
             --text-muted: #94a3b8;
             --highlight: #deff9a;
+            --pdf-color: #f43f5e;
         }
 
         * {
@@ -49,23 +50,28 @@
         .nav-container {
             max-width: 1200px;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        .logo {
-            font-family: 'Urbanist', sans-serif;
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--text-main);
+        /* Reemplazo por Logo Real en formato imagen */
+        .logo-container {
+            display: flex;
+            align-items: center;
             text-decoration: none;
-            letter-spacing: 1px;
         }
 
-        .logo span {
-            color: var(--accent);
+        .logo-img {
+            height: 55px; /* Altura optimizada para el menú */
+            width: auto;
+            object-fit: contain;
+            transition: transform 0.3s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.03);
         }
 
         .nav-links {
@@ -87,7 +93,7 @@
 
         /* Hero Section */
         .hero {
-            padding: 160px 20px 100px;
+            padding: 180px 20px 100px;
             background: radial-gradient(circle at top right, rgba(0, 180, 216, 0.15) 0%, transparent 60%);
             text-align: center;
             max-width: 1200px;
@@ -131,6 +137,7 @@
             text-decoration: none;
             transition: all 0.3s ease;
             cursor: pointer;
+            border: none;
         }
 
         .btn-primary {
@@ -155,6 +162,16 @@
             transform: translateY(-2px);
         }
 
+        .btn-pdf {
+            background-color: var(--pdf-color);
+            color: var(--text-main);
+        }
+
+        .btn-pdf:hover {
+            background-color: #f43f5ebd;
+            transform: translateY(-2px);
+        }
+
         /* Section Global Layout */
         section {
             padding: 80px 20px;
@@ -174,8 +191,8 @@
         /* Descargas Section */
         .download-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 25px;
         }
 
         .download-card {
@@ -195,10 +212,18 @@
             border-color: rgba(0, 180, 216, 0.4);
         }
 
+        .download-card.pdf-card:hover {
+            border-color: rgba(244, 63, 94, 0.4);
+        }
+
         .os-icon {
             font-size: 48px;
             color: var(--accent);
             margin-bottom: 20px;
+        }
+
+        .os-icon.pdf-icon {
+            color: var(--pdf-color);
         }
 
         .download-card h3 {
@@ -219,6 +244,11 @@
             align-self: center;
         }
 
+        .version-tag.pdf-tag {
+            background-color: rgba(244, 63, 94, 0.1);
+            color: #ffa6b6;
+        }
+
         .download-card p {
             color: var(--text-muted);
             font-size: 15px;
@@ -226,88 +256,108 @@
             flex-grow: 1;
         }
 
-        /* Tutoriales Section */
-        .tutorial-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 30px;
+        /* Tutoriales Section (Un solo video/enlace) */
+        .tutorial-container-single {
+            max-width: 800px;
+            margin: 0 auto;
         }
 
-        .tutorial-card {
+        .tutorial-card-single {
             background-color: var(--bg-card);
-            border-radius: 12px;
+            border-radius: 16px;
             overflow: hidden;
-            border: 1px solid rgba(248, 250, 252, 0.05);
+            border: 1px solid rgba(0, 180, 216, 0.1);
             transition: all 0.3s ease;
         }
 
-        .tutorial-card:hover {
-            transform: scale(1.02);
-            border-color: rgba(0, 180, 216, 0.2);
-        }
-
-        .video-placeholder {
-            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
-            height: 200px;
+        /* Contenedor de Video enlazado a YouTube */
+        .video-youtube-link {
+            display: block;
+            text-decoration: none;
+            position: relative;
+            height: 400px;
+            background: linear-gradient(135deg, #1e293b 0%, #050b14 100%);
             display: flex;
             justify-content: center;
             align-items: center;
+            color: var(--text-main);
+            overflow: hidden;
+        }
+
+        /* Superposición visual de fondo tecnológico */
+        .video-youtube-link::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80') center/cover no-repeat;
+            opacity: 0.15;
+            transition: opacity 0.3s ease, transform 0.5s ease;
+        }
+
+        .video-youtube-link:hover::before {
+            opacity: 0.25;
+            transform: scale(1.03);
+        }
+
+        /* Botón gigante de Play YouTube */
+        .play-btn-container {
             position: relative;
-            color: var(--text-muted);
-            border-bottom: 1px solid rgba(248, 250, 252, 0.05);
-        }
-
-        .video-placeholder i.fa-play {
-            font-size: 40px;
-            color: var(--accent);
-            background: rgba(11, 19, 41, 0.7);
-            padding: 20px 22px 20px 26px;
-            border-radius: 50%;
-            transition: transform 0.3s ease;
-        }
-
-        .tutorial-card:hover .video-placeholder i.fa-play {
-            transform: scale(1.1);
-            color: var(--highlight);
-        }
-
-        .tutorial-info {
-            padding: 25px;
-        }
-
-        .tutorial-duration {
-            font-size: 12px;
-            color: var(--accent);
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 8px;
-            display: block;
-        }
-
-        .tutorial-info h4 {
-            font-family: 'Urbanist', sans-serif;
-            font-size: 20px;
-            margin-bottom: 10px;
-        }
-
-        .tutorial-info p {
-            color: var(--text-muted);
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .tutorial-link {
-            color: var(--accent);
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-flex;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 5px;
-            font-size: 15px;
+            gap: 15px;
         }
 
-        .tutorial-link:hover {
-            color: var(--accent-hover);
+        .play-icon-circle {
+            width: 85px;
+            height: 85px;
+            background: rgba(244, 63, 94, 0.9); /* Rojo YouTube/Acento premium */
+            color: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 32px;
+            padding-left: 6px; /* Ajuste óptico de centralización del triángulo */
+            box-shadow: 0 0 30px rgba(244, 63, 94, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .video-youtube-link:hover .play-icon-circle {
+            transform: scale(1.1);
+            background: #ff0000;
+            box-shadow: 0 0 40px rgba(255, 0, 0, 0.6);
+        }
+
+        .play-text {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: var(--text-main);
+            text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        }
+
+        .tutorial-info-single {
+            padding: 35px;
+            border-top: 1px solid rgba(248, 250, 252, 0.05);
+        }
+
+        .tutorial-info-single h3 {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 26px;
+            margin-bottom: 12px;
+            color: var(--text-main);
+        }
+
+        .tutorial-info-single p {
+            color: var(--text-muted);
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
         }
 
         /* Footer */
@@ -328,6 +378,7 @@
             .hero h1 { font-size: 38px; }
             .hero p { font-size: 16px; }
             .nav-links { display: none; }
+            .video-youtube-link { height: 260px; }
         }
     </style>
 </head>
@@ -336,11 +387,13 @@
     <!-- Navegación -->
     <header>
         <div class="nav-container">
-            <a href="#" class="logo">BM<span>GS</span></a>
+            <!-- Logo modificado para cargar la imagen real aportada -->
+            <a href="#" class="logo-container">
+                <img src="fotoPlantilla.png" alt="Logo BMGS" class="logo-img">
+            </a>
             <ul class="nav-links">
                 <li><a href="#descargar">Descargas</a></li>
-                <li><a href="#tutoriales">Tutoriales</a></li>
-                <li><a href="#caracteristicas">Características</a></li>
+                <li><a href="#tutorial">Video Tutorial</a></li>
             </ul>
         </div>
     </header>
@@ -350,12 +403,12 @@
         <h1>Diseño Inteligente de Puestas a Tierra con <span>BMGS</span></h1>
         <p>Automatización, optimización matemática y validación avanzada de mallas de puesta a tierra bajo normativas IEEE Std 80-2013 y el Reglamento de Alta Tensión (RAT).</p>
         <div class="hero-buttons">
-            <a href="#descargar" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar v1.0.0</a>
-            <a href="#tutoriales" class="btn btn-secondary"><i class="fa-solid fa-graduation-cap"></i> Ver Tutoriales</a>
+            <a href="#descargar" class="btn btn-primary"><i class="fa-solid fa-download"></i> Ir a Descargas</a>
+            <a href="#tutorial" class="btn btn-secondary"><i class="fa-solid fa-play"></i> Ver Video Tutorial</a>
         </div>
     </section>
 
-    <!-- Sección Descargas -->
+    <!-- Sección Descargas (Windows, Linux, Linux ARM y Documentación PDF) -->
     <section id="descargar">
         <h2 class="section-title">Centro de Descarga</h2>
         <div class="download-grid">
@@ -371,85 +424,67 @@
                 <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar .EXE</a>
             </div>
 
-            <!-- Tarjeta macOS -->
-            <div class="download-card">
-                <div>
-                    <div class="os-icon"><i class="fa-brands fa-apple"></i></div>
-                    <h3>macOS</h3>
-                    <span class="version-tag">v1.0.0 Universal</span>
-                    <p>Soporte nativo para arquitecturas ARM (Apple Silicon M1/M2/M3) e Intel x86. Paquete .DMG binario firmado.</p>
-                </div>
-                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar .DMG</a>
-            </div>
-
-            <!-- Tarjeta Linux -->
+            <!-- Tarjeta Linux x86_64 -->
             <div class="download-card">
                 <div>
                     <div class="os-icon"><i class="fa-brands fa-linux"></i></div>
-                    <h3>Linux</h3>
+                    <h3>Linux x86_64</h3>
                     <span class="version-tag">v1.0.0 AppImage</span>
-                    <p>Ejecutable multiplataforma empaquetado para distribuciones basadas en Ubuntu, Debian, Fedora y Arch Linux.</p>
+                    <p>Ejecutable portable listo para usar en distribuciones basadas en Ubuntu, Debian, Fedora y Arch Linux (Intel/AMD).</p>
                 </div>
                 <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar AppImage</a>
+            </div>
+
+            <!-- Tarjeta Linux ARM -->
+            <div class="download-card">
+                <div>
+                    <div class="os-icon"><i class="fa-solid fa-microchip"></i></div>
+                    <h3>Linux ARM</h3>
+                    <span class="version-tag">v1.0.0 ARM64</span>
+                    <p>Compilación nativa optimizada para arquitecturas ARM de 64 bits (compatible con Raspberry Pi de última generación y sistemas embebidos).</p>
+                </div>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar Binario</a>
+            </div>
+
+            <!-- Tarjeta Documentación Técnica PDF -->
+            <div class="download-card pdf-card">
+                <div>
+                    <div class="os-icon pdf-icon"><i class="fa-solid fa-file-pdf"></i></div>
+                    <h3>Documentación</h3>
+                    <span class="version-tag pdf-tag">Manual Técnico</span>
+                    <p>Guía de usuario oficial detallada, especificaciones del algoritmo analítico, ecuaciones del MoM y ejemplos de validación.</p>
+                </div>
+                <!-- Enlace parametrizado para descargar el archivo PDF -->
+                <a href="documentacion_bmgs.pdf" download class="btn btn-pdf"><i class="fa-solid fa-file-arrow-down"></i> Descargar PDF</a>
             </div>
 
         </div>
     </section>
 
-    <!-- Sección Tutoriales -->
-    <section id="tutoriales">
-        <h2 class="section-title">Video Tutoriales y Guías de Uso</h2>
-        <div class="tutorial-grid">
-
-            <!-- Tutorial 1 -->
-            <div class="tutorial-card">
-                <div class="video-placeholder">
-                    <i class="fa-solid fa-play"></i>
-                </div>
-                <div class="tutorial-info">
-                    <span class="tutorial-duration">Duración: 5:42</span>
-                    <h4>1. Configuración del Terreno Multicapa</h4>
-                    <p>Aprende a introducir los perfiles geológicos y aplicar el método de reflexiones electromagnéticas para estratificar el subsuelo.</p>
-                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Tutorial 2 -->
-            <div class="tutorial-card">
-                <div class="video-placeholder">
-                    <i class="fa-solid fa-play"></i>
-                </div>
-                <div class="tutorial-info">
-                    <span class="tutorial-duration">Duración: 8:15</span>
-                    <h4>2. Modelado Libre y Discretización</h4>
-                    <p>Cómo diseñar electrodos irregulares combinando libremente conductores horizontales y picas verticales mediante el Método de los Momentos.</p>
-                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Tutorial 3 -->
-            <div class="tutorial-card">
-                <div class="video-placeholder">
-                    <i class="fa-solid fa-play"></i>
-                </div>
-                <div class="tutorial-info">
-                    <span class="tutorial-duration">Duración: 6:30</span>
-                    <h4>3. Análisis de Tensiones y Medidas Correctoras</h4>
-                    <p>Uso del mapa interactivo 3D (PyVista) para identificar tensiones críticas de paso/contacto y aplicar capas de grava o mallazos.</p>
-                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
-                </div>
-            </div>
-
-            <!-- Tutorial 4 -->
-            <div class="tutorial-card">
-                <div class="video-placeholder">
-                    <i class="fa-solid fa-play"></i>
-                </div>
-                <div class="tutorial-info">
-                    <span class="tutorial-duration">Duración: 4:10</span>
-                    <h4>4. Exportación Automática de Entregables</h4>
-                    <p>Guía paso a paso para generar la memoria descriptiva y de cálculo editable en formato ODT y planos vectoriales en DXF listos para visar.</p>
-                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
+    <!-- Sección Tutorial (Un solo video con enlace directo a YouTube) -->
+    <section id="tutorial">
+        <h2 class="section-title">Tutorial Oficial de la Aplicación</h2>
+        <div class="tutorial-container-single">
+            
+            <div class="tutorial-card-single">
+                <!-- ENLACE DE YOUTUBE PERSONALIZABLE -->
+                <!-- Reemplaza el atributo href con la URL real de tu video de YouTube -->
+                <a href="https://www.youtube.com/watch?v=TU_ID_DE_VIDEO_AQUI" target="_blank" class="video-youtube-link" title="Haga clic para reproducir el tutorial en YouTube">
+                    <div class="play-btn-container">
+                        <div class="play-icon-circle">
+                            <i class="fa-solid fa-play"></i>
+                        </div>
+                        <span class="play-text">Ver en YouTube</span>
+                    </div>
+                </a>
+                
+                <div class="tutorial-info-single">
+                    <h3>Guía Completa de Usuario y Flujo de Trabajo</h3>
+                    <p>Aprende en este videotutorial el manejo integral de BMGS: desde la caracterización geológica del terreno mediante el modelo bicapa, pasando por el modelado libre tridimensional de la malla de tierra mediante el Método de los Momentos (MoM), hasta la interpretación interactiva del mapa de riesgos en superficie y la exportación automática de planos CAD (.DXF) y memorias descriptivas (.ODT).</p>
+                    
+                    <a href="https://www.youtube.com/watch?v=TU_ID_DE_VIDEO_AQUI" target="_blank" class="btn btn-secondary" style="gap:12px;">
+                        <i class="fa-brands fa-youtube" style="color: #ff0000; font-size: 20px;"></i> Abrir reproductor externo
+                    </a>
                 </div>
             </div>
 
