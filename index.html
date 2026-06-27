@@ -381,9 +381,35 @@
             .nav-links { display: none; }
             .video-youtube-link { height: 260px; }
         }
+    
+        /* ----- ESTILOS DEL FONDO ANIMADO ----- */
+        #electric-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none; /* Deja pasar los clics hacia los botones */
+        }
+
+        /* Aseguramos que el contenido vaya por encima del canvas animado */
+        header, section, footer {
+            position: relative;
+            z-index: 10;
+        }
+        
+        body {
+            /* Eliminamos el fondo solido para dejar ver el canvas, o lo hacemos semitransparente */
+            background-color: transparent; 
+        }
+
     </style>
 </head>
 <body>
+    <!-- Canvas para el fondo de malla eléctrica animada -->
+    <canvas id="electric-canvas"></canvas>
+
 
     <!-- Navegación -->
     <header>
@@ -496,6 +522,133 @@
     <footer>
         <p>&copy; 2026 BMGS Grounding Software. Desarrollado por Pablo Barranco Jiménez.</p>
     </footer>
+
+
+    <!-- SCRIPT DE FONDO ANIMADO (MALLA ELÉCTRICA Y RAYOS) -->
+    <script>
+        const canvas = document.getElementById('electric-canvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        let particles = [];
+        let mouse = { x: -1000, y: -1000 };
+
+        function resize() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resize);
+        resize();
+
+        // Rastreo del ratón
+        window.addEventListener('mousemove', (e) => {
+            mouse.x = e.x;
+            mouse.y = e.y;
+        });
+        window.addEventListener('mouseout', () => {
+            mouse.x = -1000;
+            mouse.y = -1000;
+        });
+
+        // Nodos (Partículas)
+        class Particle {
+            constructor() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 1.5;
+                this.vy = (Math.random() - 0.5) * 1.5;
+                this.radius = 2.5;
+            }
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                // Rebote en los bordes
+                if (this.x < 0 || this.x > width) this.vx *= -1;
+                if (this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#00b4d8';
+                ctx.fill();
+            }
+        }
+
+        // Crear 60 nodos por la pantalla
+        for (let i = 0; i < 60; i++) {
+            particles.push(new Particle());
+        }
+
+        // Función para dibujar líneas (rectas o con forma de rayo si interactúa con el ratón)
+        function drawLightning(x1, y1, x2, y2, opacity, isMouse = false) {
+            ctx.beginPath();
+            ctx.moveTo(x1, y1);
+            
+            if (isMouse) {
+                // Efecto de Rayo Zig-Zag atraído por el ratón
+                let steps = 6;
+                let dx = (x2 - x1) / steps;
+                let dy = (y2 - y1) / steps;
+                let cx = x1;
+                let cy = y1;
+                
+                for (let i = 0; i < steps; i++) {
+                    // Jitter aleatorio para simular electricidad
+                    let nx = cx + dx + (Math.random() - 0.5) * 15;
+                    let ny = cy + dy + (Math.random() - 0.5) * 15;
+                    if (i === steps - 1) { nx = x2; ny = y2; }
+                    ctx.lineTo(nx, ny);
+                    cx = nx;
+                    cy = ny;
+                }
+                ctx.strokeStyle = `rgba(144, 224, 239, ${opacity * 1.2})`;
+                ctx.lineWidth = 1;
+                
+                // Efecto de resplandor
+                ctx.shadowBlur = 4;
+                ctx.shadowColor = '#00b4d8';
+            } else {
+                // Línea de malla tenue entre nodos
+                ctx.lineTo(x2, y2);
+                ctx.strokeStyle = `rgba(0, 180, 216, ${opacity * 0.5})`;
+                ctx.lineWidth = 1;
+                ctx.shadowBlur = 0;
+            }
+            ctx.stroke();
+            ctx.shadowBlur = 0; // reset
+        }
+
+        function animate() {
+            // Fondo oscuro (limpia el frame anterior)
+            ctx.fillStyle = '#0b1329';
+            ctx.fillRect(0, 0, width, height);
+
+            // Actualiza y dibuja los nodos
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+
+            // Conectar nodos entre sí y con el ratón
+            for (let i = 0; i < particles.length; i++) {
+                // Conexiones de la red principal
+                for (let j = i + 1; j < particles.length; j++) {
+                    let dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
+                    if (dist < 180) {
+                        drawLightning(particles[i].x, particles[i].y, particles[j].x, particles[j].y, 1 - dist/180);
+                    }
+                }
+                
+                // Conexión reactiva al ratón (Efecto Alta Tensión)
+                let mDist = Math.hypot(particles[i].x - mouse.x, particles[i].y - mouse.y);
+                if (mDist < 280) {
+                    drawLightning(particles[i].x, particles[i].y, mouse.x, mouse.y, 1 - mDist/140, true);
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+    </script>
 
 </body>
 </html>
