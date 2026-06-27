@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMGS - Descargas y Tutoriales Oficiales</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #0b1329;
+            --bg-card: #1c2541;
+            --accent: #00b4d8;
+            --accent-hover: #90e0ef;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --highlight: #deff9a;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Navbar */
+        header {
+            background-color: rgba(11, 19, 41, 0.9);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid rgba(0, 180, 216, 0.2);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--text-main);
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .nav-links {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent);
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 160px 20px 100px;
+            background: radial-gradient(circle at top right, rgba(0, 180, 216, 0.15) 0%, transparent 60%);
+            text-align: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 52px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero h1 span {
+            color: var(--accent);
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            max-width: 800px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background-color: var(--accent);
+            color: #0b1329;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid rgba(248, 250, 252, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(248, 250, 252, 0.05);
+            border-color: var(--text-main);
+            transform: translateY(-2px);
+        }
+
+        /* Section Global Layout */
+        section {
+            padding: 80px 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 40px;
+            border-left: 5px solid var(--accent);
+            padding-left: 15px;
+        }
+
+        /* Descargas Section */
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .download-card {
+            background-color: var(--bg-card);
+            border: 1px solid rgba(0, 180, 216, 0.1);
+            border-radius: 12px;
+            padding: 30px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .download-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(0, 180, 216, 0.4);
+        }
+
+        .os-icon {
+            font-size: 48px;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .download-card h3 {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .version-tag {
+            background-color: rgba(222, 255, 154, 0.1);
+            color: var(--highlight);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            align-self: center;
+        }
+
+        .download-card p {
+            color: var(--text-muted);
+            font-size: 15px;
+            margin-bottom: 25px;
+            flex-grow: 1;
+        }
+
+        /* Tutoriales Section */
+        .tutorial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+
+        .tutorial-card {
+            background-color: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid rgba(248, 250, 252, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-card:hover {
+            transform: scale(1.02);
+            border-color: rgba(0, 180, 216, 0.2);
+        }
+
+        .video-placeholder {
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            height: 200px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            color: var(--text-muted);
+            border-bottom: 1px solid rgba(248, 250, 252, 0.05);
+        }
+
+        .video-placeholder i.fa-play {
+            font-size: 40px;
+            color: var(--accent);
+            background: rgba(11, 19, 41, 0.7);
+            padding: 20px 22px 20px 26px;
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+        }
+
+        .tutorial-card:hover .video-placeholder i.fa-play {
+            transform: scale(1.1);
+            color: var(--highlight);
+        }
+
+        .tutorial-info {
+            padding: 25px;
+        }
+
+        .tutorial-duration {
+            font-size: 12px;
+            color: var(--accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .tutorial-info h4 {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .tutorial-info p {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .tutorial-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 15px;
+        }
+
+        .tutorial-link:hover {
+            color: var(--accent-hover);
+        }
+
+        /* Footer */
+        footer {
+            background-color: #050b14;
+            border-top: 1px solid rgba(248, 250, 252, 0.05);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 14px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 38px; }
+            .hero p { font-size: 16px; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navegación -->
+    <header>
+        <div class="nav-container">
+            <a href="#" class="logo">BM<span>GS</span></a>
+            <ul class="nav-links">
+                <li><a href="#descargar">Descargas</a></li>
+                <li><a href="#tutoriales">Tutoriales</a></li>
+                <li><a href="#caracteristicas">Características</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Sección Hero -->
+    <section class="hero">
+        <h1>Diseño Inteligente de Puestas a Tierra con <span>BMGS</span></h1>
+        <p>Automatización, optimización matemática y validación avanzada de mallas de puesta a tierra bajo normativas IEEE Std 80-2013 y el Reglamento de Alta Tensión (RAT).</p>
+        <div class="hero-buttons">
+            <a href="#descargar" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar v1.0.0</a>
+            <a href="#tutoriales" class="btn btn-secondary"><i class="fa-solid fa-graduation-cap"></i> Ver Tutoriales</a>
+        </div>
+    </section>
+
+    <!-- Sección Descargas -->
+    <section id="descargar">
+        <h2 class="section-title">Centro de Descarga</h2>
+        <div class="download-grid">
+            
+            <!-- Tarjeta Windows -->
+            <div class="download-card">
+                <div>
+                    <div class="os-icon"><i class="fa-brands fa-windows"></i></div>
+                    <h3>Windows</h3>
+                    <span class="version-tag">v1.0.0 Estable</span>
+                    <p>Compatible con Windows 10 y 11 (64 bits). Instalador ejecutable completo con dependencias JIT y entorno optimizado.</p>
+                </div>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar .EXE</a>
+            </div>
+
+            <!-- Tarjeta macOS -->
+            <div class="download-card">
+                <div>
+                    <div class="os-icon"><i class="fa-brands fa-apple"></i></div>
+                    <h3>macOS</h3>
+                    <span class="version-tag">v1.0.0 Universal</span>
+                    <p>Soporte nativo para arquitecturas ARM (Apple Silicon M1/M2/M3) e Intel x86. Paquete .DMG binario firmado.</p>
+                </div>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar .DMG</a>
+            </div>
+
+            <!-- Tarjeta Linux -->
+            <div class="download-card">
+                <div>
+                    <div class="os-icon"><i class="fa-brands fa-linux"></i></div>
+                    <h3>Linux</h3>
+                    <span class="version-tag">v1.0.0 AppImage</span>
+                    <p>Ejecutable multiplataforma empaquetado para distribuciones basadas en Ubuntu, Debian, Fedora y Arch Linux.</p>
+                </div>
+                <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar AppImage</a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Sección Tutoriales -->
+    <section id="tutoriales">
+        <h2 class="section-title">Video Tutoriales y Guías de Uso</h2>
+        <div class="tutorial-grid">
+
+            <!-- Tutorial 1 -->
+            <div class="tutorial-card">
+                <div class="video-placeholder">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <div class="tutorial-info">
+                    <span class="tutorial-duration">Duración: 5:42</span>
+                    <h4>1. Configuración del Terreno Multicapa</h4>
+                    <p>Aprende a introducir los perfiles geológicos y aplicar el método de reflexiones electromagnéticas para estratificar el subsuelo.</p>
+                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Tutorial 2 -->
+            <div class="tutorial-card">
+                <div class="video-placeholder">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <div class="tutorial-info">
+                    <span class="tutorial-duration">Duración: 8:15</span>
+                    <h4>2. Modelado Libre y Discretización</h4>
+                    <p>Cómo diseñar electrodos irregulares combinando libremente conductores horizontales y picas verticales mediante el Método de los Momentos.</p>
+                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Tutorial 3 -->
+            <div class="tutorial-card">
+                <div class="video-placeholder">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <div class="tutorial-info">
+                    <span class="tutorial-duration">Duración: 6:30</span>
+                    <h4>3. Análisis de Tensiones y Medidas Correctoras</h4>
+                    <p>Uso del mapa interactivo 3D (PyVista) para identificar tensiones críticas de paso/contacto y aplicar capas de grava o mallazos.</p>
+                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+            <!-- Tutorial 4 -->
+            <div class="tutorial-card">
+                <div class="video-placeholder">
+                    <i class="fa-solid fa-play"></i>
+                </div>
+                <div class="tutorial-info">
+                    <span class="tutorial-duration">Duración: 4:10</span>
+                    <h4>4. Exportación Automática de Entregables</h4>
+                    <p>Guía paso a paso para generar la memoria descriptiva y de cálculo editable en formato ODT y planos vectoriales en DXF listos para visar.</p>
+                    <a href="#" class="tutorial-link">Ver tutorial <i class="fa-solid fa-arrow-right"></i></a>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 BMGS Grounding Software. Desarrollado por Pablo Barranco Jiménez.</p>
+        <p>Trabajo Final de Grado &bull; Escuela Politécnica Superior de Jaén &bull; Universidad de Jaén</p>
+    </footer>
+
+</body>
+</html>
