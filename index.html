@@ -4,11 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BMGS - Descargas y Tutorial Oficial</title>
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@500;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="icon" type="image/png" href="iconoAPP.png">
     <style>
@@ -31,7 +29,7 @@
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-main);
+            background-color: transparent; 
             color: var(--text-main);
             line-height: 1.6;
             overflow-x: hidden;
@@ -79,6 +77,7 @@
             list-style: none;
             display: flex;
             gap: 30px;
+            align-items: center;
         }
 
         .nav-links a {
@@ -257,7 +256,7 @@
             flex-grow: 1;
         }
 
-        /* Tutoriales Section (Un solo video/enlace) */
+        /* Tutoriales Section */
         .tutorial-container-single {
             max-width: 800px;
             margin: 0 auto;
@@ -271,7 +270,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Contenedor de Video enlazado a YouTube */
         .video-youtube-link {
             display: block;
             text-decoration: none;
@@ -285,7 +283,6 @@
             overflow: hidden;
         }
 
-        /* Superposición visual de fondo tecnológico */
         .video-youtube-link::before {
             content: '';
             position: absolute;
@@ -301,7 +298,6 @@
             transform: scale(1.03);
         }
 
-        /* Botón gigante de Play YouTube */
         .play-btn-container {
             position: relative;
             z-index: 2;
@@ -314,14 +310,14 @@
         .play-icon-circle {
             width: 85px;
             height: 85px;
-            background: rgba(244, 63, 94, 0.9); /* Rojo YouTube/Acento premium */
+            background: rgba(244, 63, 94, 0.9);
             color: #ffffff;
             border-radius: 50%;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 32px;
-            padding-left: 6px; /* Ajuste óptico de centralización del triángulo */
+            padding-left: 6px;
             box-shadow: 0 0 30px rgba(244, 63, 94, 0.4);
             transition: all 0.3s ease;
         }
@@ -389,43 +385,121 @@
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
-            pointer-events: none; /* Deja pasar los clics hacia los botones */
+            z-index: -1; /* Forzamos a que esté en el fondo absoluto */
+            pointer-events: none;
         }
 
-        /* Aseguramos que el contenido vaya por encima del canvas animado */
         header, section, footer {
             position: relative;
             z-index: 10;
         }
-        
-        body {
-            /* Eliminamos el fondo solido para dejar ver el canvas, o lo hacemos semitransparente */
-            background-color: transparent; 
+
+        /* ----- ESTILOS DEL CHANGELOG (MODAL) ----- */
+        .modal-fondo {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(11, 19, 41, 0.85);
+            backdrop-filter: blur(8px);
         }
+
+        .modal-contenido {
+            background-color: var(--bg-card);
+            margin: 5% auto;
+            padding: 40px;
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 16px;
+            width: 90%;
+            max-width: 750px;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .cerrar-btn {
+            color: var(--text-muted);
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            font-size: 35px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .cerrar-btn:hover { color: #f43f5e; }
+
+        .modal-titulo {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 32px;
+            margin-bottom: 30px;
+            border-bottom: 2px solid rgba(248, 250, 252, 0.1);
+            padding-bottom: 15px;
+            color: var(--text-main);
+        }
+
+        .changelog-entry {
+            margin-bottom: 30px;
+        }
+
+        .changelog-entry h3 {
+            font-family: 'Urbanist', sans-serif;
+            font-size: 22px;
+            color: var(--accent);
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .fecha-ch {
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            color: var(--text-muted);
+            font-weight: 400;
+        }
+
+        .changelog-entry ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .changelog-entry ul li {
+            margin-bottom: 10px;
+            color: var(--text-muted);
+            font-size: 15px;
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .tag-nuevo { background: rgba(222, 255, 154, 0.15); color: var(--highlight); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .tag-mejora { background: rgba(0, 180, 216, 0.15); color: var(--accent); padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
+        .tag-fix { background: rgba(244, 63, 94, 0.15); color: #ffa6b6; padding: 2px 8px; border-radius: 6px; font-size: 11px; font-weight: bold; }
 
     </style>
 </head>
 <body>
-    <!-- Canvas para el fondo de malla eléctrica animada -->
     <canvas id="electric-canvas"></canvas>
 
-
-    <!-- Navegación -->
     <header>
         <div class="nav-container">
-            <!-- Logo modificado para cargar la imagen real aportada -->
             <a href="#" class="logo-container">
                 <img src="fotoPlantilla.png" alt="Logo BMGS" class="logo-img">
             </a>
             <ul class="nav-links">
                 <li><a href="#descargar">Descargas</a></li>
                 <li><a href="#tutorial">Video Tutorial</a></li>
+                <li><a href="#" onclick="abrirChangelog(event)" style="color: var(--highlight);"><i class="fa-solid fa-clock-rotate-left"></i> Changelog</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- Sección Hero -->
     <section class="hero">
         <h1>Diseño Inteligente de Puestas a Tierra con <span>BMGS</span></h1>
         <p>Automatización, optimización matemática y validación avanzada de mallas de puesta a tierra bajo normativas IEEE Std 80-2013 y el Reglamento de Alta Tensión (RAT).</p>
@@ -435,12 +509,10 @@
         </div>
     </section>
 
-    <!-- Sección Descargas (Windows, Linux, Linux ARM y Documentación PDF) -->
     <section id="descargar">
         <h2 class="section-title">Centro de Descarga</h2>
         <div class="download-grid">
             
-            <!-- Tarjeta Windows -->
             <div class="download-card">
                 <div>
                     <div class="os-icon"><i class="fa-brands fa-windows"></i></div>
@@ -451,7 +523,6 @@
                 <a href="https://drive.google.com/file/d/1bEXQdAoMm60UcrtBWE5xEswK3xhDCj3J/view?usp=drive_link" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar .EXE</a>
             </div>
 
-            <!-- Tarjeta Linux x86_64 -->
             <div class="download-card">
                 <div>
                     <div class="os-icon"><i class="fa-brands fa-linux"></i></div>
@@ -462,7 +533,6 @@
                 <a href="https://drive.google.com/file/d/1TQDggTxqs1GQYAfHdEJHgRJZalr3B__U/view?usp=drive_link" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar AppImage</a>
             </div>
 
-            <!-- Tarjeta Linux ARM -->
             <div class="download-card">
                 <div>
                     <div class="os-icon"><i class="fa-solid fa-microchip"></i></div>
@@ -473,7 +543,6 @@
                 <a href="#" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar Binario</a>
             </div>
 
-            <!-- Tarjeta Documentación Técnica PDF -->
             <div class="download-card pdf-card">
                 <div>
                     <div class="os-icon pdf-icon"><i class="fa-solid fa-file-pdf"></i></div>
@@ -481,26 +550,19 @@
                     <span class="version-tag pdf-tag">Manual Técnico</span>
                     <p>Guía de usuario oficial detallada, especificaciones del algoritmo analítico, ecuaciones del MoM y ejemplos de validación.</p>
                 </div>
-                <!-- Enlace parametrizado para descargar el archivo PDF -->
                 <a href="documentacion_bmgs.pdf" download class="btn btn-pdf"><i class="fa-solid fa-file-arrow-down"></i> Descargar PDF</a>
             </div>
 
         </div>
     </section>
 
-    <!-- Sección Tutorial (Un solo video con enlace directo a YouTube) -->
     <section id="tutorial">
         <h2 class="section-title">Tutorial Oficial de la Aplicación</h2>
         <div class="tutorial-container-single">
-            
             <div class="tutorial-card-single">
-                <!-- ENLACE DE YOUTUBE PERSONALIZABLE -->
-                <!-- Reemplaza el atributo href con la URL real de tu video de YouTube -->
                 <a href="https://youtu.be/HxqzfBVDrvo" target="_blank" class="video-youtube-link" title="Haga clic para reproducir el tutorial en YouTube">
                     <div class="play-btn-container">
-                        <div class="play-icon-circle">
-                            <i class="fa-solid fa-play"></i>
-                        </div>
+                        <div class="play-icon-circle"><i class="fa-solid fa-play"></i></div>
                         <span class="play-text">Ver en YouTube</span>
                     </div>
                 </a>
@@ -514,18 +576,54 @@
                     </a>
                 </div>
             </div>
-
         </div>
     </section>
 
-    <!-- Footer -->
+    <div id="modalChangelog" class="modal-fondo">
+        <div class="modal-contenido">
+            <span class="cerrar-btn" onclick="cerrarChangelog()">&times;</span>
+            <h2 class="modal-titulo">Historial de Versiones (Changelog)</h2>
+            
+            <div class="changelog-entry">
+                <h3>v1.0.0 - Lanzamiento Oficial <span class="fecha-ch">22 Jun 2026</span></h3>
+                <ul>
+                    <li><span class="tag-nuevo">NUEVO</span> Implementación del motor de cálculo basado en el Método de los Momentos (MoM).</li>
+                    <li><span class="tag-nuevo">NUEVO</span> Interfaz gráfica 3D interactiva mediante PyVista.</li>
+                    <li><span class="tag-nuevo">NUEVO</span> Exportación automática de memorias técnicas a formato ODT.</li>
+                    <li><span class="tag-nuevo">NUEVO</span> Generación de planos CAD en formato DXF.</li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 BMGS Grounding Software. Desarrollado por Pablo Barranco Jiménez.</p>
     </footer>
 
-
-    <!-- SCRIPT DE FONDO ANIMADO (MALLA ELÉCTRICA Y RAYOS) -->
     <script>
+        /* --- LÓGICA DE LA VENTANA CHANGELOG --- */
+        const modalChangelog = document.getElementById("modalChangelog");
+
+        function abrirChangelog(event) {
+            event.preventDefault(); // Evita que la página salte hacia arriba
+            modalChangelog.style.display = "block";
+            document.body.style.overflow = "hidden"; // Quita el scroll de fondo
+        }
+
+        function cerrarChangelog() {
+            modalChangelog.style.display = "none";
+            document.body.style.overflow = "auto"; // Devuelve el scroll
+        }
+
+        // Cierra al hacer clic fuera de la ventana blanca
+        window.onclick = function(event) {
+            if (event.target == modalChangelog) {
+                cerrarChangelog();
+            }
+        }
+
+        /* --- SCRIPT DE FONDO ANIMADO (MALLA ELÉCTRICA Y RAYOS) --- */
         const canvas = document.getElementById('electric-canvas');
         const ctx = canvas.getContext('2d');
         let width, height;
@@ -533,14 +631,13 @@
         let mouse = { x: -1000, y: -1000 };
         let isMobile = false;
 
-        // Nodos (Partículas)
         class Particle {
             constructor() {
                 this.x = Math.random() * (window.innerWidth || 800);
                 this.y = Math.random() * (window.innerHeight || 600);
                 this.vx = (Math.random() - 0.5) * 1.2;
                 this.vy = (Math.random() - 0.5) * 1.2;
-                this.radius = Math.random() * 1.5 + 1; // Radio un poco más variable
+                this.radius = Math.random() * 1.5 + 1;
             }
             update() {
                 this.x += this.vx;
@@ -556,27 +653,24 @@
             }
         }
 
-        // Función que adapta todo a la pantalla (Móvil vs PC)
         function resize() {
             width = canvas.width = window.innerWidth;
             height = canvas.height = window.innerHeight;
-            isMobile = width < 768; // Detectamos si es pantalla de móvil
+            isMobile = width < 768; 
 
-            // Ajustamos el número de partículas: 25 en móvil, 60 en PC
             let desiredParticles = isMobile ? 25 : 60;
             
             if (particles.length > desiredParticles) {
-                particles = particles.slice(0, desiredParticles); // Eliminamos las que sobran
+                particles = particles.slice(0, desiredParticles);
             } else {
                 for (let i = particles.length; i < desiredParticles; i++) {
-                    particles.push(new Particle()); // Creamos si faltan
+                    particles.push(new Particle());
                 }
             }
         }
         
         window.addEventListener('resize', resize);
         
-        // Rastreo del ratón (Solo registra coordenadas si NO es móvil)
         window.addEventListener('mousemove', (e) => {
             if (!isMobile) {
                 mouse.x = e.x;
@@ -588,13 +682,11 @@
             mouse.y = -1000;
         });
 
-        // Función para dibujar líneas (rectas o con forma de rayo)
         function drawLightning(x1, y1, x2, y2, opacity, isMouse = false) {
             ctx.beginPath();
             ctx.moveTo(x1, y1);
             
             if (isMouse && !isMobile) {
-                // Efecto de Rayo Zig-Zag (Solo en PC)
                 let steps = 6;
                 let dx = (x2 - x1) / steps;
                 let dy = (y2 - y1) / steps;
@@ -614,18 +706,16 @@
                 ctx.shadowBlur = 4;
                 ctx.shadowColor = '#00b4d8';
             } else {
-                // Línea de malla tenue (Más transparente y fina en móvil)
                 ctx.lineTo(x2, y2);
                 ctx.strokeStyle = `rgba(0, 180, 216, ${opacity * (isMobile ? 0.3 : 0.5)})`;
                 ctx.lineWidth = isMobile ? 0.5 : 1; 
                 ctx.shadowBlur = 0;
             }
             ctx.stroke();
-            ctx.shadowBlur = 0; // Resetear sombras
+            ctx.shadowBlur = 0; 
         }
 
         function animate() {
-            // Fondo oscuro base
             ctx.fillStyle = '#0b1329';
             ctx.fillRect(0, 0, width, height);
 
@@ -634,11 +724,9 @@
                 p.draw();
             });
 
-            // Si es móvil conectamos a 100px máximo, en PC a 180px
             let connectionDist = isMobile ? 100 : 180; 
 
             for (let i = 0; i < particles.length; i++) {
-                // Conexiones de la red principal
                 for (let j = i + 1; j < particles.length; j++) {
                     let dist = Math.hypot(particles[i].x - particles[j].x, particles[i].y - particles[j].y);
                     if (dist < connectionDist) {
@@ -646,7 +734,6 @@
                     }
                 }
                 
-                // Conexión reactiva al ratón (Solo calcula en PC)
                 if (!isMobile) {
                     let mDist = Math.hypot(particles[i].x - mouse.x, particles[i].y - mouse.y);
                     if (mDist < 140) {
@@ -657,9 +744,8 @@
             requestAnimationFrame(animate);
         }
         
-        resize(); // Inicia comprobando la pantalla
-        animate(); // Inicia la animación
+        resize(); 
+        animate(); 
     </script>
-
 </body>
 </html>
