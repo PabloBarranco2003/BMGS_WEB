@@ -518,7 +518,7 @@
                 <div>
                     <div class="os-icon"><i class="fa-brands fa-windows"></i></div>
                     <h3>Windows</h3>
-                    <span class="version-tag">v1.0.0 exe</span>
+                    <span class="version-tag" id="BMGS-version">Cargando versión...</span>
                     <p>Compatible con Windows 10 y 11 (64 bits). Programa portable completo.</p>
                 </div>
                 <a href="https://drive.google.com/file/d/1bEXQdAoMm60UcrtBWE5xEswK3xhDCj3J/view?usp=drive_link" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar .EXE</a>
@@ -528,7 +528,7 @@
                 <div>
                     <div class="os-icon"><i class="fa-brands fa-linux"></i></div>
                     <h3>Linux x86_64</h3>
-                    <span class="version-tag">v1.0.0 AppImage</span>
+                    <span class="version-tag" id="BMGS-version">Cargando versión...</span>
                     <p>Ejecutable portable para procesadores x86 en linux.</p>
                 </div>
                 <a href="https://drive.google.com/file/d/1TQDggTxqs1GQYAfHdEJHgRJZalr3B__U/view?usp=drive_link" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar AppImage</a>
@@ -538,7 +538,7 @@
                 <div>
                     <div class="os-icon"><i class="fa-solid fa-microchip"></i></div>
                     <h3>Linux ARM</h3>
-                    <span class="version-tag">v1.0.0 AppImage</span>
+                    <span class="version-tag" id="BMGS-version">Cargando versión...</span>
                     <p>Ejecutable portable para procesadores ARM en linux.</p>
                 </div>
                 <a href="https://drive.google.com/file/d/1byO7stgFEP9uxtPqmDYPCRHayhBBpNmx/view?usp=drive_link" class="btn btn-primary"><i class="fa-solid fa-download"></i> Descargar AppImage</a>
@@ -601,6 +601,32 @@
     <footer>
         <p>&copy; 2026 BMGS Grounding Software. Desarrollado por Pablo Barranco Jiménez.</p>
     </footer>
+
+
+    
+    <script>
+        // Buscamos el archivo version.txt en la raíz
+        fetch('/version.txt')
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al cargar version.txt');
+                }
+                return response.text();
+            })
+            .then(version => {
+                // version.trim() elimina los saltos de línea y espacios en blanco del txt
+                // Le concatenamos ' exe' al final
+                document.getElementById('BMGS-version').innerText = version.trim();
+            })
+            .catch(error => {
+                console.error(error);
+                // Si el archivo no existe o falla, ponemos un valor por defecto
+                document.getElementById('BMGS-version').innerText = 'vX.X.X';
+            });
+    </script>
+
+
+
 
     <script>
         /* --- LÓGICA DE LA VENTANA CHANGELOG --- */
