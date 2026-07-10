@@ -374,8 +374,20 @@
         @media (max-width: 768px) {
             .hero h1 { font-size: 38px; }
             .hero p { font-size: 16px; }
-            .nav-links { display: none; }
             .video-youtube-link { height: 260px; }
+            
+            /* Nueva configuración para que el menú se vea bien en móviles */
+            .nav-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .nav-links { 
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                gap: 15px;
+            }
         }
     
         /* ----- ESTILOS DEL FONDO ANIMADO ----- */
