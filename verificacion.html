@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Página de verificación numérica de BMGS frente a los casos comparativos con Autogrid Pro del libro de referencia.">
+<meta name="theme-color" content="#060911">
+<title>BMGS · Verificación numérica</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="icon" type="image/png" href="iconoAPP.png">
+
+<style>
+:root{
+  --bg:#060911; --bg-elevated:#0b1120; --surface-dark:#101928;
+  --border-dark:rgba(148,163,184,.16); --border-dark-strong:rgba(148,163,184,.30);
+  --accent:#3fd3ff; --accent-strong:#9be8ff; --accent-soft:rgba(63,211,255,.10);
+  --text:#eef2f8; --text-muted:#8d99b3; --text-faint:#55607a;
+  --ok:#34d399; --ok-soft:rgba(52,211,153,.14);
+
+  --bg-light:#f5f7fb; --surface-light:#ffffff;
+  --border-light:#e3e8f1; --border-light-strong:#ccd5e3;
+  --text-dark:#10151f; --text-dark-muted:#59657a; --text-dark-faint:#8b96a8;
+  --accent-deep:#087ba3; --accent-deep-soft:rgba(8,123,163,.08);
+  --danger-deep:#d7263d; --danger-deep-soft:rgba(215,38,61,.07);
+
+  --radius-sm:6px; --radius-md:10px; --radius-lg:16px;
+  --font-sans:'IBM Plex Sans','Segoe UI',sans-serif;
+  --font-mono:'IBM Plex Mono','SFMono-Regular',monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{color:inherit}
+
+/* ===== Navbar (igual que index) ===== */
+header{
+  background-color:rgba(6,9,17,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  position:fixed;width:100%;top:0;z-index:1000;border-bottom:1px solid var(--border-dark);
+}
+.nav-container{max-width:1240px;margin:0 auto;padding:14px 24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.logo-container{display:flex;align-items:center;gap:14px;text-decoration:none}
+.logo-img{height:42px;width:auto;object-fit:contain}
+.nav-right{display:flex;align-items:center;gap:28px}
+.nav-links{list-style:none;display:flex;gap:28px;align-items:center}
+.nav-links a{color:var(--text-muted);text-decoration:none;font-weight:500;font-size:14.5px;transition:color .2s ease}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--accent)}
+@media (max-width:860px){
+  .nav-container{flex-wrap:wrap;justify-content:center;text-align:center}
+  .nav-right{flex-direction:column;gap:14px;width:100%}
+  .nav-links{flex-wrap:wrap;justify-content:center}
+}
+
+/* ===== Hero (oscuro, coherente con index) ===== */
+.hero-outer{position:relative;padding-bottom:90px}
+.hero{padding:150px 24px 40px;max-width:1240px;margin:0 auto;position:relative;z-index:2}
+.eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+.hero h1{font-family:var(--font-sans);font-size:clamp(2rem,3.8vw,3.1rem);font-weight:700;letter-spacing:-.02em;line-height:1.12;max-width:900px;margin-bottom:18px}
+.hero p{max-width:780px;color:var(--text-muted);font-size:16.5px}
+.hero-chips{display:flex;gap:10px;flex-wrap:wrap;margin-top:26px}
+.hero-chips span{font-family:var(--font-mono);font-size:12px;color:var(--accent);background:var(--accent-soft);border:1px solid var(--border-dark-strong);padding:6px 13px;border-radius:20px}
+.hero-fade{
+  position:absolute;left:0;right:0;bottom:0;height:220px;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(6,9,17,0) 0%,rgba(6,9,17,.35) 30%,rgba(8,24,40,.65) 55%,rgba(74,138,170,.30) 80%,var(--bg-light) 100%);
+}
+
+/* ===== Body claro ===== */
+main{background:var(--bg-light);position:relative;z-index:2;color:var(--text-dark)}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px}
+
+.section{padding:56px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:24px}
+.section-title{font-family:var(--font-sans);font-size:clamp(1.4rem,2.4vw,1.9rem);font-weight:700;color:var(--text-dark);display:flex;align-items:baseline;gap:12px;letter-spacing:-.015em}
+.section-title .marker{font-family:var(--font-mono);color:var(--accent-deep);font-weight:500;font-size:.78em}
+.section-sub{color:var(--text-dark-muted);font-size:15px;margin-top:6px;max-width:800px}
+
+.chips{display:flex;gap:8px;flex-wrap:wrap}
+.chip{font-family:var(--font-mono);font-size:11.5px;font-weight:500;padding:5px 11px;border-radius:20px;background:var(--accent-deep-soft);color:var(--accent-deep);border:1px solid var(--border-light)}
+.chip.pass{background:var(--ok-soft);color:#0f7a52;border-color:rgba(52,211,153,.35)}
+.chip.fail{background:var(--danger-deep-soft);color:var(--danger-deep);border-color:rgba(215,38,61,.30)}
+
+/* ===== Panel base ===== */
+.panel{background:var(--surface-light);border:1px solid var(--border-light);border-radius:var(--radius-md);box-shadow:0 18px 40px -28px rgba(16,24,40,.18);overflow:hidden}
+
+/* ===== Visor 3D + controles ===== */
+.viewer-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.8fr);gap:18px}
+.viewer{background:#081421;min-height:410px;position:relative;overflow:hidden}
+.viewer canvas{width:100%;height:410px;display:block;touch-action:none}
+.viewer-tip{position:absolute;left:14px;bottom:12px;color:#8aa2b8;font-family:var(--font-mono);font-size:11px;background:rgba(6,9,17,.85);padding:6px 10px;border-radius:6px}
+.view-label{position:absolute;top:14px;left:14px;color:#cfe6f7;font-family:var(--font-mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase}
+
+.controls{padding:22px}
+.controls label{display:block;font-family:var(--font-mono);color:var(--text-dark-muted);font-size:11.5px;font-weight:500;margin:0 0 8px;text-transform:uppercase;letter-spacing:.06em}
+.controls select{width:100%;padding:11px 12px;border:1px solid var(--border-light-strong);border-radius:var(--radius-sm);background:#fff;color:var(--text-dark);font:inherit;margin-bottom:18px;font-family:var(--font-sans)}
+.controls select:focus{outline:none;border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-deep-soft)}
+.case-id{font-family:var(--font-mono);font-size:12px;color:var(--accent-deep)}
+.case-title{font-family:var(--font-sans);font-size:20px;font-weight:600;color:var(--text-dark);margin:4px 0 4px}
+.dims{color:var(--text-dark-muted);font-size:13.5px;margin:0 0 16px}
+
+.view-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
+.smallbtn{border:1px solid var(--border-light-strong);border-radius:var(--radius-sm);background:#fff;padding:8px 12px;color:var(--text-dark);font-size:12.5px;font-family:var(--font-sans);font-weight:500;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
+.smallbtn:hover{border-color:var(--accent-deep);color:var(--accent-deep)}
+.smallbtn[aria-pressed=true]{background:var(--accent-deep-soft);border-color:var(--accent-deep);color:var(--accent-deep)}
+
+.note-inline{margin-top:16px;background:var(--accent-deep-soft);border-left:3px solid var(--accent-deep);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:11px 14px;color:var(--text-dark-muted);font-size:12.5px}
+
+/* ===== Stats ===== */
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
+.stat{background:var(--surface-light);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:16px}
+.stat .label{font-family:var(--font-mono);font-size:11px;color:var(--text-dark-faint);text-transform:uppercase;letter-spacing:.06em}
+.stat strong{display:block;font-family:var(--font-mono);font-weight:600;font-size:clamp(17px,2vw,23px);margin-top:6px;color:var(--text-dark)}
+.stat small{display:block;color:var(--text-dark-faint);font-size:11.5px;margin-top:4px}
+
+/* ===== Tablas ===== */
+.table-wrap{overflow:auto}
+table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:530px;font-family:var(--font-sans)}
+th,td{text-align:right;padding:12px 16px;border-bottom:1px solid var(--border-light);font-size:13.5px;white-space:nowrap;color:var(--text-dark)}
+th{background:#f2f6fa;color:var(--text-dark-muted);font-family:var(--font-mono);font-size:11px;text-transform:uppercase;letter-spacing:.05em;font-weight:500}
+th:first-child,td:first-child{text-align:left}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:#fafcfe}
+.good{color:#0f7a52;font-weight:600}
+.bad{color:var(--danger-deep);font-weight:600}
+.neutral{color:var(--text-dark-muted)}
+
+.panel-title{padding:18px 20px 12px;font-weight:600;font-size:15px;color:var(--text-dark)}
+.panel-note{padding:0 20px 18px;color:var(--text-dark-faint);font-size:12px}
+
+/* ===== Bars comparativas ===== */
+.metric-row{display:grid;grid-template-columns:72px 1fr 74px;gap:12px;align-items:center;padding:10px 20px;border-top:1px solid var(--border-light);font-size:12.5px}
+.metric-row .metric{font-family:var(--font-mono);font-weight:600;color:var(--text-dark)}
+.bar-pair{display:grid;gap:5px}
+.bar{height:7px;border-radius:10px;min-width:2px}
+.bar.bmgs{background:var(--accent-deep)}
+.bar.auto{background:#f0a33b}
+.legend{display:flex;gap:16px;flex-wrap:wrap;padding:12px 20px;color:var(--text-dark-muted);font-size:11.5px;font-family:var(--font-mono)}
+.legend i{display:inline-block;width:8px;height:8px;border-radius:2px;margin-right:6px}
+.legend .blue{background:var(--accent-deep)}
+.legend .orange{background:#f0a33b}
+
+/* ===== Overview tabla ===== */
+.overview table{min-width:820px}
+.case-button{color:var(--accent-deep);background:none;border:0;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:var(--font-mono);font-size:12.5px}
+.case-button:hover{color:#065a7a}
+
+/* ===== Footers / notas ===== */
+.footnote{background:var(--accent-deep-soft);border-left:3px solid var(--accent-deep);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 18px;color:var(--text-dark-muted);font-size:12.5px;margin-top:14px;line-height:1.7}
+.footnote.warn{background:#fff4e4;border-left-color:#c57a18;color:#754a16}
+
+/* ===== Alcance ===== */
+.scope p{color:var(--text-dark-muted);font-size:14.5px;margin-top:12px;line-height:1.75}
+.scope p strong{color:var(--text-dark)}
+.scope a{color:var(--accent-deep);text-decoration:none}
+.scope a:hover{text-decoration:underline}
+
+/* ===== CTA interna ===== */
+.cta-inline{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;text-decoration:none;background:#e8f8fd;border:1px solid #b8e9f6;border-radius:var(--radius-md);padding:18px 22px;color:#123047;transition:transform .2s ease,border-color .2s ease}
+.cta-inline:hover{transform:translateY(-2px);border-color:#7ad3ee}
+.cta-inline strong{display:block;font-size:16px}
+.cta-inline span.sub{display:block;color:#49677a;font-size:13px;margin-top:3px}
+.cta-inline .arrow{font-weight:600;color:var(--accent-deep);white-space:nowrap}
+
+/* ===== Footer (igual que index) ===== */
+footer{background:var(--bg-elevated);border-top:1px solid var(--border-dark);padding:30px 6%;display:flex;align-items:center;justify-content:space-between;gap:1rem;color:var(--text-muted);font-size:13.5px;position:relative;z-index:2}
+footer p{font-family:var(--font-mono);font-size:.78rem;color:var(--text-faint);white-space:nowrap}
+footer a{color:var(--accent);text-decoration:none}
+.footer-legal{display:flex;gap:1.4rem;align-items:center}
+.footer-legal a{font-size:.8rem;color:var(--text-muted);white-space:nowrap;transition:color .2s}
+.footer-legal a:hover{color:var(--accent)}
+.footer-eula{font-size:11.5px !important;white-space:normal !important;text-align:right;max-width:320px}
+@media (max-width:768px){
+  footer{flex-direction:column;align-items:center;text-align:center;gap:.9rem}
+  .footer-legal{gap:1rem;flex-wrap:wrap;justify-content:center}
+  .footer-eula{text-align:center;max-width:100%}
+}
+
+/* ===== Responsive ===== */
+@media (max-width:900px){
+  .viewer-layout,.results-grid{grid-template-columns:1fr}
+  .viewer canvas{height:340px}
+  .viewer{min-height:340px}
+  .stats{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:540px){
+  .hero{padding:130px 16px 40px}
+  .wrap{padding:0 14px}
+  .viewer canvas{height:290px}
+  .stats{gap:10px}
+  .stat{padding:12px}
+  .metric-row{grid-template-columns:52px 1fr 60px;padding:10px 12px}
+  .controls{padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-container">
+    <a href="index.html" class="logo-container">
+      <img src="fotoPlantilla.png" alt="Logo BMGS" class="logo-img">
+    </a>
+    <div class="nav-right">
+      <ul class="nav-links">
+        <li><a href="index.html#descargar">Descargas</a></li>
+        <li><a href="index.html#producto">Programa</a></li>
+        <li><a href="index.html#tutorial">Video Tutorial</a></li>
+        <li><a href="verificacion.html" class="active">Verificación</a></li>
+        <li><a href="index.html">Volver a BMGS</a></li>
+      </ul>
+    </div>
+  </div>
+</header>
+
+<div class="hero-outer">
+  <section class="hero">
+    <div class="eyebrow">// Validación numérica · 9 casos frente a AutoGrid Pro</div>
+    <h1>Verificación comparativa del motor de cálculo</h1>
+    <p>Comparación de los resultados de BMGS con los valores de AutoGrid Pro publicados en los ejemplos comparativos del libro <em>Sistemas de puestas a tierra en instalaciones de alta tensión. Diseño, cálculo y verificación</em>. Selecciona un caso para inspeccionar el electrodo en 3D y consultar sus coeficientes.</p>
+    <div class="hero-chips">
+      <span>Modelo esquemático</span>
+      <span>Sin cálculo en navegador</span>
+      <span>v1.2.0</span>
+    </div>
+  </section>
+  <div class="hero-fade"></div>
+</div>
+
+<main>
+<div class="wrap">
+
+  <!-- 1 / Electrodo y resultados -->
+  <section class="section">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title"><span class="marker">//</span>Electrodo y resultados comparados</h2>
+        <p class="section-sub">Arrastra para rotar, usa la rueda para acercar o alejar. La profundidad se representa hacia abajo desde el plano del terreno.</p>
+      </div>
+    </div>
+
+    <div class="viewer-layout">
+      <div class="panel viewer">
+        <div class="view-label">Vista tridimensional · geometría conceptual</div>
+        <canvas id="scene" aria-label="Representación tridimensional esquemática del electrodo seleccionado"></canvas>
+        <div class="viewer-tip">Arrastrar: rotar · Rueda: zoom</div>
+      </div>
+      <aside class="panel controls">
+        <label for="caseSelect">Caso de verificación</label>
+        <select id="caseSelect"></select>
+        <div class="case-id" id="caseId">ATG 2.4.1</div>
+        <div class="case-title" id="caseName">Pica única</div>
+        <p class="dims" id="caseDims"></p>
+        <div class="chips" id="statusChips"></div>
+        <div class="view-buttons">
+          <button class="smallbtn" id="resetView">Restablecer vista</button>
+          <button class="smallbtn" id="toggleRods" aria-pressed="true">Picas: visibles</button>
+          <button class="smallbtn" id="toggleGround" aria-pressed="true">Plano: visible</button>
+        </div>
+        <div class="note-inline">La escala vertical se exagera visualmente para distinguir la profundidad y las picas. No debe utilizarse esta vista para extraer dimensiones de proyecto.</div>
+      </aside>
+    </div>
+
+    <div class="stats">
+      <div class="stat"><div class="label">R tierra BMGS</div><strong id="statR">44.166669 Ω</strong><small>Resultado del test aportado</small></div>
+      <div class="stat"><div class="label">Segmentos N</div><strong id="statN">20</strong><small>Discretización reportada</small></div>
+      <div class="stat"><div class="label">Error Kr</div><strong id="statKr">6.096 %</strong><small>BMGS frente a Autogrid</small></div>
+      <div class="stat"><div class="label">Criterio Kr</div><strong id="statPass">FALLADO</strong><small>Umbral de referencia: ±5 %</small></div>
+    </div>
+
+    <div class="section-head" style="margin-top:36px">
+      <div>
+        <h2 class="section-title"><span class="marker">//</span> Resultados del electrodo seleccionado</h2>
+        <p class="section-sub">Al cambiar el caso, se actualizan a la vez la geometría 3D, la resistencia y los coeficientes Kr, Kp y Kc.</p>
+      </div>
+    </div>
+
+    <div class="results-grid" style="display:grid;grid-template-columns:1fr 1fr;gap:18px">
+      <div class="panel">
+        <div class="panel-title">Valores numéricos</div>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Coeficiente</th><th>BMGS</th><th>Autogrid Pro</th><th>Error</th></tr></thead>
+            <tbody id="detailRows"></tbody>
+          </table>
+        </div>
+        <div class="panel-note">Error relativo porcentual informado por el test ATG.</div>
+      </div>
+      <div class="panel">
+        <div class="panel-title">Comparación visual</div>
+        <div class="legend"><span><i class="blue"></i>BMGS</span><span><i class="orange"></i>Autogrid Pro</span></div>
+        <div id="bars"></div>
+        <div class="panel-note">Cada par de barras se normaliza respecto al mayor valor de ese coeficiente. La escala es independiente por fila.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 / Overview -->
+  <section class="section overview">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title"><span class="marker">//</span>Resumen de los nueve casos</h2>
+        <p class="section-sub">Pulsa el nombre de un caso para cargar su geometría y sus resultados arriba.</p>
+      </div>
+      <div class="chips">
+        <span class="chip pass">8 superados por Kr</span>
+        <span class="chip fail">1 fuera de tolerancia por Kr</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="table-wrap">
+        <table>
+          <thead><tr>
+            <th>Ejemplo</th><th>Electrodo</th><th>N</th><th>R BMGS (Ω)</th>
+            <th>Kr BMGS</th><th>Kr Auto</th><th>Error Kr</th>
+            <th>Kp BMGS</th><th>Kp Auto</th><th>Error Kp</th>
+            <th>Kc BMGS</th><th>Kc Auto</th><th>Error Kc</th><th>Estado Kr</th>
+          </tr></thead>
+          <tbody id="overviewRows"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="footnote"><strong>Observación técnica:</strong> aunque ocho casos cumplen el umbral de Kr, eso no implica que todos los coeficientes estén dentro del 5 %. Kp y Kc deben analizarse de forma independiente; sus diferencias más elevadas aparecen en 2.4.1 y 2.4.9.</div>
+    <div class="footnote warn"><strong>Sobre tensión de contacto y de paso:</strong> si una comparación no coincide o no cumple respecto a los valores de Autogrid, una posible explicación es que Autogrid utilice un paso de muestreo diferente o una manera distinta de distribuir/plotear los puntos de evaluación sobre el terreno. Esto es solo una hipótesis que debe comprobarse, no una justificación demostrada: las discrepancias son relevantes y deben investigarse antes de considerar validado el resultado.</div>
+  </section>
+
+  <!-- 3 / Alcance -->
+  <section class="section scope">
+    <div class="section-head">
+      <div>
+        <h2 class="section-title"><span class="marker">//</span>Alcance y procedencia</h2>
+      </div>
+    </div>
+    <div class="panel" style="padding:22px 24px">
+      <p><strong>Fuente de referencia:</strong> Moreno Mohíno, J.; Simón, P.; Asensio, G.; Denche, G.; Faleiro, E.; García, D.; Navarro, P. y Pazos, F. J. (2015). <em>Sistemas de puestas a tierra en instalaciones de alta tensión. Diseño, cálculo y verificación.</em> Madrid: Garceta Grupo Editorial / Ibergarceta. ISBN 978-84-1622-817-1., apartado 2.4.</p>
+      <p><strong>Datos publicados:</strong> número de segmentos, resistencia de tierra de BMGS, Kr/Kp/Kc de BMGS y Autogrid, y errores porcentuales reportados. No se han inferido valores adicionales de Autogrid. Todos los cálculos han sido realizados usando la versión 1.2.0 de BMGS.</p>
+      <p><strong>Descargo de responsabilidad (disclaimer):</strong> BMGS es una herramienta experimental y teórica. Esta página se limita a contrastar sus resultados con valores publicados de AutoGrid Pro a título referencial; no constituye una validación oficial ni sustituye la verificación con software reconocido, la normativa aplicable ni el criterio de personal técnico competente. El usuario es responsable de revisar datos de entrada, hipótesis, resultados y márgenes de seguridad antes de cualquier uso real. BMGS no está afiliado ni respaldado por AutoGrid Pro. El uso de BMGS requiere la aceptación del EULA, que se muestra en la primera ejecución.</p>
+      <p><strong>Limitaciones:</strong> esta página no ejecuta el motor MoM, no recalcula los errores, no valida las condiciones de contorno ni confirma la configuración exacta usada por Autogrid. Las figuras 3D son ilustrativas y están construidas a partir de los nombres y esquemas de los casos del libro; se deben sustituir por geometrías exportadas de BMGS si se quiere una validación geométrica exacta.</p>
+    </div>
+  </section>
+
+  <!-- CTA volver -->
+  <section class="section" style="padding-top:0">
+    <a href="index.html" class="cta-inline">
+      <span>
+        <strong>Volver a la página principal de BMGS</strong>
+        <span class="sub">Descargas, documentación y tutoriales oficiales.</span>
+      </span>
+      <span class="arrow">Ir a BMGS →</span>
+    </a>
+  </section>
+
+</div>
+</main>
+
+<footer>
+  <p>&copy; 2026 Pablo Barranco &mdash; Ingeniero Eléctrico y Electrónico</p>
+  <div class="footer-legal">
+    <a href="index.html#">Aviso Legal</a>
+    <a href="index.html#">Privacidad</a>
+    <a href="index.html#">Cookies</a>
+  </div>
+  <p class="footer-eula">El uso del software implica la aceptación del EULA mostrado al ejecutar la aplicación.</p>
+</footer>
+
+<script>
+const cases = [{"id":"2.4.1","name":"Pica única","segments":20,"R":44.166669,"KrB":0.441667,"KrA":0.47034,"KpB":0.018863,"KpA":0.012854,"KcB":0.367109,"KcA":0.395766,"errKr":6.096,"errKp":46.75,"errKc":7.241,"pass":false,"geometry":"rod","dims":"Pica vertical de 2 m; cabeza enterrada a 1 m","rho":100},{"id":"2.4.2","name":"Picas en hilera","segments":244,"R":2.232565,"KrB":0.022326,"KrA":0.02263,"KpB":0.002424,"KpA":0.002394,"KcB":0.0121,"KcA":0.012443,"errKr":1.345,"errKp":1.266,"errKc":2.76,"pass":true,"geometry":"line","dims":"Hilera de 84 m; 8 picas; profundidad 0,8 m","rho":100},{"id":"2.4.3","name":"Anillo 3 × 8 sin picas","segments":44,"R":8.849148,"KrB":0.088491,"KrA":0.09005,"KpB":0.013757,"KpA":0.01305,"KcB":0.050477,"KcA":0.051766,"errKr":1.731,"errKp":5.419,"errKc":2.491,"pass":true,"geometry":"ring4","dims":"Anillo rectangular; profundidad 0,8 m","rho":100},{"id":"2.4.4","name":"Anillo 3 × 8 con 4 picas","segments":124,"R":7.260612,"KrB":0.072606,"KrA":0.073079,"KpB":0.010775,"KpA":0.010905,"KcB":0.035204,"KcA":0.034749,"errKr":0.647,"errKp":1.195,"errKc":1.309,"pass":true,"geometry":"ring4rods","dims":"Anillo rectangular con 4 picas; profundidad 0,8 m","rho":100},{"id":"2.4.5","name":"Anillo 4 × 5 con 8 picas","segments":196,"R":7.439523,"KrB":0.074395,"KrA":0.07533,"KpB":0.014782,"KpA":0.01548,"KcB":0.033241,"KcA":0.033624,"errKr":1.241,"errKp":4.513,"errKc":1.139,"pass":true,"geometry":"ring8rods","dims":"Anillo rectangular con 8 picas; profundidad 0,5 m","rho":100},{"id":"2.4.6","name":"Doble anillo sin picas","segments":96,"R":5.982351,"KrB":0.059824,"KrA":0.061308,"KpB":0.008121,"KpA":0.007804,"KcB":0.029209,"KcA":0.030995,"errKr":2.421,"errKp":4.061,"errKc":5.762,"pass":true,"geometry":"double","dims":"Doble anillo rectangular; profundidad 1 m","rho":100},{"id":"2.4.7","name":"Doble anillo con 4 picas (prof. distinta)","segments":176,"R":5.461626,"KrB":0.054616,"KrA":0.055001,"KpB":0.007209,"KpA":0.007352,"KcB":0.023862,"KcA":0.024044,"errKr":0.7,"errKp":1.954,"errKc":0.759,"pass":true,"geometry":"double4","dims":"Doble anillo; 4 picas exteriores; profundidades distintas","rho":100},{"id":"2.4.8","name":"Doble anillo con 8 picas (prof. distinta)","segments":256,"R":5.142474,"KrB":0.051425,"KrA":0.051811,"KpB":0.006676,"KpA":0.006757,"KcB":0.021435,"KcA":0.021669,"errKr":0.746,"errKp":1.2,"errKc":1.08,"pass":true,"geometry":"double8","dims":"Doble anillo; 8 picas exteriores; profundidades distintas","rho":100},{"id":"2.4.9","name":"Malla 40 × 55 m, retícula 5 × 5","segments":390,"R":0.944313,"KrB":0.009443,"KrA":0.009498,"KpB":0.000895,"KpA":0.000812,"KcB":0.002808,"KcA":0.001523,"errKr":0.576,"errKp":10.282,"errKc":84.44,"pass":true,"geometry":"mesh","dims":"Malla 40 × 55 m; retícula nominal 5 × 5 m; profundidad 0,8 m","rho":100}];
+const select=document.getElementById('caseSelect');
+const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d');
+let current=0,yaw=-0.62,pitch=0.62,zoom=1,drag=null,showRods=true,showGround=true,geom=[];
+cases.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`ATG ${c.id} — ${c.name}`;select.appendChild(o)});
+const fmt=(v,n=6)=>Number(v).toFixed(n);
+function addLine(a,b,type='wire'){geom.push({a,b,type})}
+function ring(w,h,z,rods=0,rodLen=2,rodDepth=z){
+ const pts=[[-w/2,-h/2,z],[w/2,-h/2,z],[w/2,h/2,z],[-w/2,h/2,z]];
+ for(let i=0;i<4;i++)addLine(pts[i],pts[(i+1)%4]);
+ if(rods===4)pts.forEach(p=>addLine([p[0],p[1],rodDepth],[p[0],p[1],rodDepth-rodLen],'rod'));
+ if(rods===8){pts.forEach(p=>addLine([p[0],p[1],rodDepth],[p[0],p[1],rodDepth-rodLen],'rod'));for(let i=0;i<4;i++){let p=pts[i],q=pts[(i+1)%4],m=[(p[0]+q[0])/2,(p[1]+q[1])/2,rodDepth];addLine(m,[m[0],m[1],rodDepth-rodLen],'rod')}}
+}
+function makeGeometry(c){
+ geom=[];const z=-({ '2.4.1':1,'2.4.2':.8,'2.4.3':.8,'2.4.4':.8,'2.4.5':.5,'2.4.6':1,'2.4.7':.5,'2.4.8':.5,'2.4.9':.8}[c.id]||.8);
+ if(c.geometry==='rod'){addLine([0,0,z],[0,0,z-2],'rod')}
+ else if(c.geometry==='line'){for(let i=0;i<7;i++)addLine([-42+i*12,0,z],[ -30+i*12,0,z]);for(let i=0;i<8;i++){let x=-42+i*12;addLine([x,0,z],[x,0,z-2],'rod')}}
+ else if(c.geometry==='ring4')ring(8,5,z,0)
+ else if(c.geometry==='ring4rods')ring(8,5,z,4,2,z)
+ else if(c.geometry==='ring8rods')ring(8,5,z,8,2,z)
+ else if(c.geometry==='double'){ring(7,5,z,0);ring(4.5,2.5,z-.05,0)}
+ else if(c.geometry==='double4'||c.geometry==='double8'){ring(7,5,-.5, c.geometry==='double4'?4:8,2,-.5);ring(4.5,2.5,-1,0)}
+ else if(c.geometry==='mesh'){const w=40,h=55,zz=-.8;for(let x=-w/2;x<=w/2+.01;x+=5)addLine([x,-h/2,zz],[x,h/2,zz]);for(let y=-h/2;y<=h/2+.01;y+=5)addLine([-w/2,y,zz],[w/2,y,zz])}
+}
+function project(p,w,h){
+ let [x,y,z]=p;let ca=Math.cos(yaw),sa=Math.sin(yaw),cp=Math.cos(pitch),sp=Math.sin(pitch);
+ let xx=x*ca-y*sa, yy=x*sa+y*ca, zz=z;
+ let y2=yy*cp-zz*sp, z2=yy*sp+zz*cp;
+ const all=geom.flatMap(g=>[g.a,g.b]);let max=1;
+ for(const q of all)max=Math.max(max,Math.abs(q[0]),Math.abs(q[1]),Math.abs(q[2])*1.8);
+ const scale=Math.min(w,h)*.39/max*zoom;
+ return [w/2+xx*scale,h/2+y2*scale,z2];
+}
+function draw(){
+ const rect=canvas.getBoundingClientRect(),dpr=Math.min(devicePixelRatio||1,2);
+ if(canvas.width!==Math.round(rect.width*dpr)||canvas.height!==Math.round(rect.height*dpr)){canvas.width=Math.round(rect.width*dpr);canvas.height=Math.round(rect.height*dpr)}
+ const w=canvas.width,h=canvas.height;ctx.setTransform(dpr,0,0,dpr,0,0);ctx.clearRect(0,0,rect.width,rect.height);
+ const W=rect.width,H=rect.height;
+ const grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'#0a1b2c');grad.addColorStop(1,'#060c16');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+ if(showGround){
+  ctx.strokeStyle='rgba(105,151,185,.13)';ctx.lineWidth=1;
+  for(let i=-10;i<=10;i++){const a=project([i*5,-50,0],W,H),b=project([i*5,50,0],W,H),c=project([-50,i*5,0],W,H),d=project([50,i*5,0],W,H);ctx.beginPath();ctx.moveTo(a[0],a[1]);ctx.lineTo(b[0],b[1]);ctx.stroke();ctx.beginPath();ctx.moveTo(c[0],c[1]);ctx.lineTo(d[0],d[1]);ctx.stroke()}
+ }
+ const items=geom.filter(g=>showRods||g.type!=='rod').map(g=>({...g,pa:project(g.a,W,H),pb:project(g.b,W,H)})).sort((a,b)=>(a.pa[2]+a.pb[2])-(b.pa[2]+b.pb[2]));
+ for(const g of items){ctx.beginPath();ctx.moveTo(g.pa[0],g.pa[1]);ctx.lineTo(g.pb[0],g.pb[1]);ctx.strokeStyle=g.type==='rod'?'#ffb65d':'#3fd3ff';ctx.lineWidth=g.type==='rod'?3:2.2;ctx.lineCap='round';ctx.shadowColor=g.type==='rod'?'#ff9b3d':'#3fd3ff';ctx.shadowBlur=5;ctx.stroke();ctx.shadowBlur=0}
+ const o=project([0,0,0],W,H);ctx.beginPath();ctx.arc(o[0],o[1],3,0,Math.PI*2);ctx.fillStyle='#e8f5ff';ctx.fill();
+ ctx.fillStyle='#8ea8c0';ctx.font='11px "IBM Plex Mono", monospace';ctx.fillText('TERRENO (z = 0)',14,H-18);
+}
+function loadCase(i){
+ current=i;const c=cases[i];select.value=i;makeGeometry(c);draw();
+ document.getElementById('caseId').textContent='ATG '+c.id;
+ document.getElementById('caseName').textContent=c.name;
+ document.getElementById('caseDims').textContent=c.dims;
+ document.getElementById('statR').textContent=fmt(c.R)+' Ω';
+ document.getElementById('statN').textContent=c.segments;
+ document.getElementById('statKr').textContent=fmt(c.errKr,3)+' %';
+ document.getElementById('statPass').textContent=c.pass?'SUPERADO':'FALLADO';
+ document.getElementById('statPass').style.color=c.pass?'#0f7a52':'#d7263d';
+ document.getElementById('statusChips').innerHTML=`<span class="chip ${c.pass?'pass':'fail'}">${c.pass?'Kr dentro de ±5 %':'Kr fuera de ±5 %'}</span><span class="chip">ρ referencia: 100 Ω·m*</span>`;
+ const rows=[['Kr',c.KrB,c.KrA,c.errKr],['Kp',c.KpB,c.KpA,c.errKp],['Kc',c.KcB,c.KcA,c.errKc]];
+ document.getElementById('detailRows').innerHTML=rows.map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td><td class="${r[3]>5?'bad':'good'}">${fmt(r[3],3)} %</td></tr>`).join('');
+ document.getElementById('bars').innerHTML=rows.map(r=>{let m=Math.max(r[1],r[2]);return `<div class="metric-row"><span class="metric">${r[0]}</span><div class="bar-pair"><div class="bar bmgs" style="width:${r[1]/m*100}%"></div><div class="bar auto" style="width:${r[2]/m*100}%"></div></div><strong class="${r[3]>5?'bad':'neutral'}">${fmt(r[3],2)}%</strong></div>`}).join('');
+}
+document.getElementById('overviewRows').innerHTML=cases.map((c,i)=>`<tr><td><button class="case-button" data-case="${i}">ATG ${c.id}</button></td><td>${c.name}</td><td>${c.segments}</td><td>${fmt(c.R)}</td><td>${fmt(c.KrB)}</td><td>${fmt(c.KrA)}</td><td class="${c.errKr>5?'bad':'good'}">${fmt(c.errKr,3)} %</td><td>${fmt(c.KpB)}</td><td>${fmt(c.KpA)}</td><td class="${c.errKp>5?'bad':'good'}">${fmt(c.errKp,3)} %</td><td>${fmt(c.KcB)}</td><td>${fmt(c.KcA)}</td><td class="${c.errKc>5?'bad':'good'}">${fmt(c.errKc,3)} %</td><td class="${c.pass?'good':'bad'}">${c.pass?'SUPERADO':'FALLADO'}</td></tr>`).join('');
+select.addEventListener('change',()=>loadCase(Number(select.value)));
+document.getElementById('overviewRows').addEventListener('click',e=>{const b=e.target.closest('[data-case]');if(b){loadCase(Number(b.dataset.case));document.getElementById('scene').scrollIntoView({behavior:'smooth',block:'center'})}});
+document.getElementById('resetView').addEventListener('click',()=>{yaw=-.62;pitch=.62;zoom=1;draw()});
+document.getElementById('toggleRods').addEventListener('click',e=>{showRods=!showRods;e.currentTarget.setAttribute('aria-pressed',showRods);e.currentTarget.textContent='Picas: '+(showRods?'visibles':'ocultas');draw()});
+document.getElementById('toggleGround').addEventListener('click',e=>{showGround=!showGround;e.currentTarget.setAttribute('aria-pressed',showGround);e.currentTarget.textContent='Plano: '+(showGround?'visible':'oculto');draw()});
+canvas.addEventListener('pointerdown',e=>{drag={x:e.clientX,y:e.clientY};canvas.setPointerCapture(e.pointerId)});
+canvas.addEventListener('pointermove',e=>{if(!drag)return;yaw+=(e.clientX-drag.x)*.009;pitch=Math.max(-.2,Math.min(1.35,pitch+(e.clientY-drag.y)*.008));drag={x:e.clientX,y:e.clientY};draw()});
+canvas.addEventListener('pointerup',()=>drag=null);canvas.addEventListener('pointercancel',()=>drag=null);
+canvas.addEventListener('wheel',e=>{e.preventDefault();zoom=Math.max(.45,Math.min(2.6,zoom*(e.deltaY>0?.92:1.08)));draw()},{passive:false});
+window.addEventListener('resize',draw);loadCase(0);
+</script>
+</body>
+</html>
