@@ -34,7 +34,6 @@ html{scroll-behavior:smooth}
 body{font-family:var(--font-sans);background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
 a{color:inherit}
 
-/* ===== Navbar (igual que index) ===== */
 header{
   background-color:rgba(6,9,17,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
   position:fixed;width:100%;top:0;z-index:1000;border-bottom:1px solid var(--border-dark);
@@ -53,7 +52,6 @@ header{
   .nav-links{flex-wrap:wrap;justify-content:center}
 }
 
-/* ===== Hero (oscuro, coherente con index) ===== */
 .hero-outer{position:relative;padding-bottom:90px}
 .hero{padding:150px 24px 40px;max-width:1240px;margin:0 auto;position:relative;z-index:2}
 .eyebrow{font-family:var(--font-mono);font-size:12px;letter-spacing:.15em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
@@ -66,7 +64,6 @@ header{
   background:linear-gradient(180deg,rgba(6,9,17,0) 0%,rgba(6,9,17,.35) 30%,rgba(8,24,40,.65) 55%,rgba(74,138,170,.30) 80%,var(--bg-light) 100%);
 }
 
-/* ===== Body claro ===== */
 main{background:var(--bg-light);position:relative;z-index:2;color:var(--text-dark)}
 .wrap{max-width:1240px;margin:0 auto;padding:0 24px}
 
@@ -81,10 +78,8 @@ main{background:var(--bg-light);position:relative;z-index:2;color:var(--text-dar
 .chip.pass{background:var(--ok-soft);color:#0f7a52;border-color:rgba(52,211,153,.35)}
 .chip.fail{background:var(--danger-deep-soft);color:var(--danger-deep);border-color:rgba(215,38,61,.30)}
 
-/* ===== Panel base ===== */
 .panel{background:var(--surface-light);border:1px solid var(--border-light);border-radius:var(--radius-md);box-shadow:0 18px 40px -28px rgba(16,24,40,.18);overflow:hidden}
 
-/* ===== Visor 3D + controles ===== */
 .viewer-layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(280px,.8fr);gap:18px}
 .viewer{background:#081421;min-height:410px;position:relative;overflow:hidden}
 .viewer canvas{width:100%;height:410px;display:block;touch-action:none}
@@ -97,7 +92,10 @@ main{background:var(--bg-light);position:relative;z-index:2;color:var(--text-dar
 .controls select:focus{outline:none;border-color:var(--accent-deep);box-shadow:0 0 0 3px var(--accent-deep-soft)}
 .case-id{font-family:var(--font-mono);font-size:12px;color:var(--accent-deep)}
 .case-title{font-family:var(--font-sans);font-size:20px;font-weight:600;color:var(--text-dark);margin:4px 0 4px}
-.dims{color:var(--text-dark-muted);font-size:13.5px;margin:0 0 16px}
+.dims{color:var(--text-dark-muted);font-size:13.5px;margin:0 0 14px}
+
+.specs-label{font-family:var(--font-mono);font-size:10.5px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--text-dark-faint);margin:0 0 8px}
+.specs-chips{margin-bottom:14px}
 
 .view-buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:16px}
 .smallbtn{border:1px solid var(--border-light-strong);border-radius:var(--radius-sm);background:#fff;padding:8px 12px;color:var(--text-dark);font-size:12.5px;font-family:var(--font-sans);font-weight:500;cursor:pointer;transition:border-color .2s,background .2s,color .2s}
@@ -106,14 +104,12 @@ main{background:var(--bg-light);position:relative;z-index:2;color:var(--text-dar
 
 .note-inline{margin-top:16px;background:var(--accent-deep-soft);border-left:3px solid var(--accent-deep);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:11px 14px;color:var(--text-dark-muted);font-size:12.5px}
 
-/* ===== Stats ===== */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:16px}
 .stat{background:var(--surface-light);border:1px solid var(--border-light);border-radius:var(--radius-md);padding:16px}
 .stat .label{font-family:var(--font-mono);font-size:11px;color:var(--text-dark-faint);text-transform:uppercase;letter-spacing:.06em}
 .stat strong{display:block;font-family:var(--font-mono);font-weight:600;font-size:clamp(17px,2vw,23px);margin-top:6px;color:var(--text-dark)}
 .stat small{display:block;color:var(--text-dark-faint);font-size:11.5px;margin-top:4px}
 
-/* ===== Tablas ===== */
 .table-wrap{overflow:auto}
 table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums;min-width:530px;font-family:var(--font-sans)}
 th,td{text-align:right;padding:12px 16px;border-bottom:1px solid var(--border-light);font-size:13.5px;white-space:nowrap;color:var(--text-dark)}
@@ -128,7 +124,6 @@ tbody tr:hover{background:#fafcfe}
 .panel-title{padding:18px 20px 12px;font-weight:600;font-size:15px;color:var(--text-dark)}
 .panel-note{padding:0 20px 18px;color:var(--text-dark-faint);font-size:12px}
 
-/* ===== Bars comparativas ===== */
 .metric-row{display:grid;grid-template-columns:72px 1fr 74px;gap:12px;align-items:center;padding:10px 20px;border-top:1px solid var(--border-light);font-size:12.5px}
 .metric-row .metric{font-family:var(--font-mono);font-weight:600;color:var(--text-dark)}
 .bar-pair{display:grid;gap:5px}
@@ -140,29 +135,26 @@ tbody tr:hover{background:#fafcfe}
 .legend .blue{background:var(--accent-deep)}
 .legend .orange{background:#f0a33b}
 
-/* ===== Overview tabla ===== */
 .overview table{min-width:820px}
+.overview th,.overview td{padding:11px 13px}
+.overview .col-spec{font-family:var(--font-mono);font-size:12px;color:var(--text-dark-muted);text-align:left}
 .case-button{color:var(--accent-deep);background:none;border:0;font:inherit;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font-family:var(--font-mono);font-size:12.5px}
 .case-button:hover{color:#065a7a}
 
-/* ===== Footers / notas ===== */
 .footnote{background:var(--accent-deep-soft);border-left:3px solid var(--accent-deep);border-radius:0 var(--radius-sm) var(--radius-sm) 0;padding:14px 18px;color:var(--text-dark-muted);font-size:12.5px;margin-top:14px;line-height:1.7}
 .footnote.warn{background:#fff4e4;border-left-color:#c57a18;color:#754a16}
 
-/* ===== Alcance ===== */
 .scope p{color:var(--text-dark-muted);font-size:14.5px;margin-top:12px;line-height:1.75}
 .scope p strong{color:var(--text-dark)}
 .scope a{color:var(--accent-deep);text-decoration:none}
 .scope a:hover{text-decoration:underline}
 
-/* ===== CTA interna ===== */
 .cta-inline{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;text-decoration:none;background:#e8f8fd;border:1px solid #b8e9f6;border-radius:var(--radius-md);padding:18px 22px;color:#123047;transition:transform .2s ease,border-color .2s ease}
 .cta-inline:hover{transform:translateY(-2px);border-color:#7ad3ee}
 .cta-inline strong{display:block;font-size:16px}
 .cta-inline span.sub{display:block;color:#49677a;font-size:13px;margin-top:3px}
 .cta-inline .arrow{font-weight:600;color:var(--accent-deep);white-space:nowrap}
 
-/* ===== Footer (igual que index) ===== */
 footer{background:var(--bg-elevated);border-top:1px solid var(--border-dark);padding:30px 6%;display:flex;align-items:center;justify-content:space-between;gap:1rem;color:var(--text-muted);font-size:13.5px;position:relative;z-index:2}
 footer p{font-family:var(--font-mono);font-size:.78rem;color:var(--text-faint);white-space:nowrap}
 footer a{color:var(--accent);text-decoration:none}
@@ -176,7 +168,6 @@ footer a{color:var(--accent);text-decoration:none}
   .footer-eula{text-align:center;max-width:100%}
 }
 
-/* ===== Responsive ===== */
 @media (max-width:900px){
   .viewer-layout,.results-grid{grid-template-columns:1fr}
   .viewer canvas{height:340px}
@@ -230,7 +221,6 @@ footer a{color:var(--accent);text-decoration:none}
 <main>
 <div class="wrap">
 
-  <!-- 1 / Electrodo y resultados -->
   <section class="section">
     <div class="section-head">
       <div>
@@ -251,6 +241,10 @@ footer a{color:var(--accent);text-decoration:none}
         <div class="case-id" id="caseId">ATG 2.4.1</div>
         <div class="case-title" id="caseName">Pica única</div>
         <p class="dims" id="caseDims"></p>
+
+        <div class="specs-label">Conductor y picas empleadas</div>
+        <div class="chips specs-chips" id="specChips"></div>
+
         <div class="chips" id="statusChips"></div>
         <div class="view-buttons">
           <button class="smallbtn" id="resetView">Restablecer vista</button>
@@ -295,7 +289,6 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </section>
 
-  <!-- 2 / Overview -->
   <section class="section overview">
     <div class="section-head">
       <div>
@@ -311,7 +304,8 @@ footer a{color:var(--accent);text-decoration:none}
       <div class="table-wrap">
         <table>
           <thead><tr>
-            <th>Ejemplo</th><th>Electrodo</th><th>N</th><th>R BMGS (Ω)</th>
+            <th>Ejemplo</th><th>Electrodo</th><th>Conductor</th>
+            <th>N</th><th>R BMGS (Ω)</th>
             <th>Kr BMGS</th><th>Kr Auto</th><th>Error Kr</th>
             <th>Kp BMGS</th><th>Kp Auto</th><th>Error Kp</th>
             <th>Kc BMGS</th><th>Kc Auto</th><th>Error Kc</th><th>Estado Kr</th>
@@ -324,7 +318,6 @@ footer a{color:var(--accent);text-decoration:none}
     <div class="footnote warn"><strong>Sobre tensión de contacto y de paso:</strong> si una comparación no coincide o no cumple respecto a los valores de Autogrid, una posible explicación es que Autogrid utilice un paso de muestreo diferente o una manera distinta de distribuir/plotear los puntos de evaluación sobre el terreno. Esto es solo una hipótesis que debe comprobarse, no una justificación demostrada: las discrepancias son relevantes y deben investigarse antes de considerar validado el resultado.</div>
   </section>
 
-  <!-- 3 / Alcance -->
   <section class="section scope">
     <div class="section-head">
       <div>
@@ -339,7 +332,6 @@ footer a{color:var(--accent);text-decoration:none}
     </div>
   </section>
 
-  <!-- CTA volver -->
   <section class="section" style="padding-top:0">
     <a href="index.html" class="cta-inline">
       <span>
@@ -364,12 +356,32 @@ footer a{color:var(--accent);text-decoration:none}
 </footer>
 
 <script>
-const cases = [{"id":"2.4.1","name":"Pica única","segments":20,"R":44.166669,"KrB":0.441667,"KrA":0.47034,"KpB":0.018863,"KpA":0.012854,"KcB":0.367109,"KcA":0.395766,"errKr":6.096,"errKp":46.75,"errKc":7.241,"pass":false,"geometry":"rod","dims":"Pica vertical de 2 m; cabeza enterrada a 1 m","rho":100},{"id":"2.4.2","name":"Picas en hilera","segments":244,"R":2.232565,"KrB":0.022326,"KrA":0.02263,"KpB":0.002424,"KpA":0.002394,"KcB":0.0121,"KcA":0.012443,"errKr":1.345,"errKp":1.266,"errKc":2.76,"pass":true,"geometry":"line","dims":"Hilera de 84 m; 8 picas; profundidad 0,8 m","rho":100},{"id":"2.4.3","name":"Anillo 3 × 8 sin picas","segments":44,"R":8.849148,"KrB":0.088491,"KrA":0.09005,"KpB":0.013757,"KpA":0.01305,"KcB":0.050477,"KcA":0.051766,"errKr":1.731,"errKp":5.419,"errKc":2.491,"pass":true,"geometry":"ring4","dims":"Anillo rectangular; profundidad 0,8 m","rho":100},{"id":"2.4.4","name":"Anillo 3 × 8 con 4 picas","segments":124,"R":7.260612,"KrB":0.072606,"KrA":0.073079,"KpB":0.010775,"KpA":0.010905,"KcB":0.035204,"KcA":0.034749,"errKr":0.647,"errKp":1.195,"errKc":1.309,"pass":true,"geometry":"ring4rods","dims":"Anillo rectangular con 4 picas; profundidad 0,8 m","rho":100},{"id":"2.4.5","name":"Anillo 4 × 5 con 8 picas","segments":196,"R":7.439523,"KrB":0.074395,"KrA":0.07533,"KpB":0.014782,"KpA":0.01548,"KcB":0.033241,"KcA":0.033624,"errKr":1.241,"errKp":4.513,"errKc":1.139,"pass":true,"geometry":"ring8rods","dims":"Anillo rectangular con 8 picas; profundidad 0,5 m","rho":100},{"id":"2.4.6","name":"Doble anillo sin picas","segments":96,"R":5.982351,"KrB":0.059824,"KrA":0.061308,"KpB":0.008121,"KpA":0.007804,"KcB":0.029209,"KcA":0.030995,"errKr":2.421,"errKp":4.061,"errKc":5.762,"pass":true,"geometry":"double","dims":"Doble anillo rectangular; profundidad 1 m","rho":100},{"id":"2.4.7","name":"Doble anillo con 4 picas (prof. distinta)","segments":176,"R":5.461626,"KrB":0.054616,"KrA":0.055001,"KpB":0.007209,"KpA":0.007352,"KcB":0.023862,"KcA":0.024044,"errKr":0.7,"errKp":1.954,"errKc":0.759,"pass":true,"geometry":"double4","dims":"Doble anillo; 4 picas exteriores; profundidades distintas","rho":100},{"id":"2.4.8","name":"Doble anillo con 8 picas (prof. distinta)","segments":256,"R":5.142474,"KrB":0.051425,"KrA":0.051811,"KpB":0.006676,"KpA":0.006757,"KcB":0.021435,"KcA":0.021669,"errKr":0.746,"errKp":1.2,"errKc":1.08,"pass":true,"geometry":"double8","dims":"Doble anillo; 8 picas exteriores; profundidades distintas","rho":100},{"id":"2.4.9","name":"Malla 40 × 55 m, retícula 5 × 5","segments":390,"R":0.944313,"KrB":0.009443,"KrA":0.009498,"KpB":0.000895,"KpA":0.000812,"KcB":0.002808,"KcA":0.001523,"errKr":0.576,"errKp":10.282,"errKc":84.44,"pass":true,"geometry":"mesh","dims":"Malla 40 × 55 m; retícula nominal 5 × 5 m; profundidad 0,8 m","rho":100}];
+const cases = [
+ {"id":"2.4.1","name":"Pica única","segments":20,"R":44.166669,"KrB":0.441667,"KrA":0.47034,"KpB":0.018863,"KpA":0.012854,"KcB":0.367109,"KcA":0.395766,"errKr":6.096,"errKp":46.75,"errKc":7.241,"pass":false,"geometry":"rod","dims":"Pica vertical de 2 m; cabeza enterrada a 1 m","rho":100,
+  "conductor":"no tiene","conductorDiam":null,"pica":"acero cobrizado","picaDiam":14,"picaLen":2},
+ {"id":"2.4.2","name":"Picas en hilera","segments":244,"R":2.232565,"KrB":0.022326,"KrA":0.02263,"KpB":0.002424,"KpA":0.002394,"KcB":0.0121,"KcA":0.012443,"errKr":1.345,"errKp":1.266,"errKc":2.76,"pass":true,"geometry":"line","dims":"Hilera de 84 m; 8 picas; profundidad 0,8 m","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"8 picas","picaDiam":14,"picaLen":2},
+ {"id":"2.4.3","name":"Anillo 3 × 8 sin picas","segments":44,"R":8.849148,"KrB":0.088491,"KrA":0.09005,"KpB":0.013757,"KpA":0.01305,"KcB":0.050477,"KcA":0.051766,"errKr":1.731,"errKp":5.419,"errKc":2.491,"pass":true,"geometry":"ring4","dims":"Anillo rectangular; profundidad 0,8 m","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"no tiene","picaDiam":null,"picaLen":null},
+ {"id":"2.4.4","name":"Anillo 3 × 8 con 4 picas","segments":124,"R":7.260612,"KrB":0.072606,"KrA":0.073079,"KpB":0.010775,"KpA":0.010905,"KcB":0.035204,"KcA":0.034749,"errKr":0.647,"errKp":1.195,"errKc":1.309,"pass":true,"geometry":"ring4rods","dims":"Anillo rectangular con 4 picas; profundidad 0,8 m","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"4 picas","picaDiam":14,"picaLen":2},
+ {"id":"2.4.5","name":"Anillo 4 × 5 con 8 picas","segments":196,"R":7.439523,"KrB":0.074395,"KrA":0.07533,"KpB":0.014782,"KpA":0.01548,"KcB":0.033241,"KcA":0.033624,"errKr":1.241,"errKp":4.513,"errKc":1.139,"pass":true,"geometry":"ring8rods","dims":"Anillo rectangular con 8 picas; profundidad 0,5 m","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"8 picas","picaDiam":14,"picaLen":2},
+ {"id":"2.4.6","name":"Doble anillo sin picas","segments":96,"R":5.982351,"KrB":0.059824,"KrA":0.061308,"KpB":0.008121,"KpA":0.007804,"KcB":0.029209,"KcA":0.030995,"errKr":2.421,"errKp":4.061,"errKc":5.762,"pass":true,"geometry":"double","dims":"Doble anillo rectangular; profundidad 1 m","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"no tiene","picaDiam":null,"picaLen":null},
+ {"id":"2.4.7","name":"Doble anillo con 4 picas (prof. distinta)","segments":176,"R":5.461626,"KrB":0.054616,"KrA":0.055001,"KpB":0.007209,"KpA":0.007352,"KcB":0.023862,"KcA":0.024044,"errKr":0.7,"errKp":1.954,"errKc":0.759,"pass":true,"geometry":"double4","dims":"Doble anillo; 4 picas exteriores; profundidades distintas","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"4 picas","picaDiam":14,"picaLen":2},
+ {"id":"2.4.8","name":"Doble anillo con 8 picas (prof. distinta)","segments":256,"R":5.142474,"KrB":0.051425,"KrA":0.051811,"KpB":0.006676,"KpA":0.006757,"KcB":0.021435,"KcA":0.021669,"errKr":0.746,"errKp":1.2,"errKc":1.08,"pass":true,"geometry":"double8","dims":"Doble anillo; 8 picas exteriores; profundidades distintas","rho":100,
+  "conductor":"cobre 50 mm²","conductorDiam":7.98,"pica":"8 picas","picaDiam":14,"picaLen":2},
+ {"id":"2.4.9","name":"Malla 40 × 55 m, retícula 5 × 5","segments":390,"R":0.944313,"KrB":0.009443,"KrA":0.009498,"KpB":0.000895,"KpA":0.000812,"KcB":0.002808,"KcA":0.001523,"errKr":0.576,"errKp":10.282,"errKc":84.44,"pass":true,"geometry":"mesh","dims":"Malla 40 × 55 m; retícula nominal 5 × 5 m; profundidad 0,8 m","rho":100,
+  "conductor":"cobre 70 mm²","conductorDiam":9.44,"pica":"no tiene","picaDiam":null,"picaLen":null}
+];
 const select=document.getElementById('caseSelect');
 const canvas=document.getElementById('scene'),ctx=canvas.getContext('2d');
 let current=0,yaw=-0.62,pitch=0.62,zoom=1,drag=null,showRods=true,showGround=true,geom=[];
 cases.forEach((c,i)=>{const o=document.createElement('option');o.value=i;o.textContent=`ATG ${c.id} — ${c.name}`;select.appendChild(o)});
 const fmt=(v,n=6)=>Number(v).toFixed(n);
+const num = (v,n=2)=> Number(v).toFixed(n).replace('.',',');
 function addLine(a,b,type='wire'){geom.push({a,b,type})}
 function ring(w,h,z,rods=0,rodLen=2,rodDepth=z){
  const pts=[[-w/2,-h/2,z],[w/2,-h/2,z],[w/2,h/2,z],[-w/2,h/2,z]];
@@ -412,11 +424,27 @@ function draw(){
  const o=project([0,0,0],W,H);ctx.beginPath();ctx.arc(o[0],o[1],3,0,Math.PI*2);ctx.fillStyle='#e8f5ff';ctx.fill();
  ctx.fillStyle='#8ea8c0';ctx.font='11px "IBM Plex Mono", monospace';ctx.fillText('TERRENO (z = 0)',14,H-18);
 }
+function renderSpecChips(c){
+  const wrap = document.getElementById('specChips');
+  const chips = [];
+  if (c.conductor === 'no tiene') {
+    chips.push(`<span class="chip">Sin conductor</span>`);
+  } else {
+    chips.push(`<span class="chip">${c.conductor}${c.conductorDiam!=null ? ' · Ø '+num(c.conductorDiam,2)+' mm' : ''}</span>`);
+  }
+  if (c.pica === 'no tiene') {
+    chips.push(`<span class="chip">Sin picas</span>`);
+  } else {
+    chips.push(`<span class="chip">${c.pica}${c.picaDiam!=null ? ' · Ø '+num(c.picaDiam,0)+' mm' : ''}${c.picaLen!=null ? ' · '+num(c.picaLen,0)+' m' : ''}</span>`);
+  }
+  wrap.innerHTML = chips.join('');
+}
 function loadCase(i){
  current=i;const c=cases[i];select.value=i;makeGeometry(c);draw();
  document.getElementById('caseId').textContent='ATG '+c.id;
  document.getElementById('caseName').textContent=c.name;
  document.getElementById('caseDims').textContent=c.dims;
+ renderSpecChips(c);
  document.getElementById('statR').textContent=fmt(c.R)+' Ω';
  document.getElementById('statN').textContent=c.segments;
  document.getElementById('statKr').textContent=fmt(c.errKr,3)+' %';
@@ -427,7 +455,19 @@ function loadCase(i){
  document.getElementById('detailRows').innerHTML=rows.map(r=>`<tr><td><strong>${r[0]}</strong></td><td>${fmt(r[1])}</td><td>${fmt(r[2])}</td><td class="${r[3]>5?'bad':'good'}">${fmt(r[3],3)} %</td></tr>`).join('');
  document.getElementById('bars').innerHTML=rows.map(r=>{let m=Math.max(r[1],r[2]);return `<div class="metric-row"><span class="metric">${r[0]}</span><div class="bar-pair"><div class="bar bmgs" style="width:${r[1]/m*100}%"></div><div class="bar auto" style="width:${r[2]/m*100}%"></div></div><strong class="${r[3]>5?'bad':'neutral'}">${fmt(r[3],2)}%</strong></div>`}).join('');
 }
-document.getElementById('overviewRows').innerHTML=cases.map((c,i)=>`<tr><td><button class="case-button" data-case="${i}">ATG ${c.id}</button></td><td>${c.name}</td><td>${c.segments}</td><td>${fmt(c.R)}</td><td>${fmt(c.KrB)}</td><td>${fmt(c.KrA)}</td><td class="${c.errKr>5?'bad':'good'}">${fmt(c.errKr,3)} %</td><td>${fmt(c.KpB)}</td><td>${fmt(c.KpA)}</td><td class="${c.errKp>5?'bad':'good'}">${fmt(c.errKp,3)} %</td><td>${fmt(c.KcB)}</td><td>${fmt(c.KcA)}</td><td class="${c.errKc>5?'bad':'good'}">${fmt(c.errKc,3)} %</td><td class="${c.pass?'good':'bad'}">${c.pass?'SUPERADO':'FALLADO'}</td></tr>`).join('');
+document.getElementById('overviewRows').innerHTML=cases.map((c,i)=>{
+  const condTxt = c.conductor === 'no tiene' ? '—' : c.conductor;
+  return `<tr>
+    <td><button class="case-button" data-case="${i}">ATG ${c.id}</button></td>
+    <td>${c.name}</td>
+    <td class="col-spec">${condTxt}</td>
+    <td>${c.segments}</td>
+    <td>${fmt(c.R)}</td>
+    <td>${fmt(c.KrB)}</td><td>${fmt(c.KrA)}</td><td class="${c.errKr>5?'bad':'good'}">${fmt(c.errKr,3)} %</td>
+    <td>${fmt(c.KpB)}</td><td>${fmt(c.KpA)}</td><td class="${c.errKp>5?'bad':'good'}">${fmt(c.errKp,3)} %</td>
+    <td>${fmt(c.KcB)}</td><td>${fmt(c.KcA)}</td><td class="${c.errKc>5?'bad':'good'}">${fmt(c.errKc,3)} %</td>
+    <td class="${c.pass?'good':'bad'}">${c.pass?'SUPERADO':'FALLADO'}</td>
+  </tr>`}).join('');
 select.addEventListener('change',()=>loadCase(Number(select.value)));
 document.getElementById('overviewRows').addEventListener('click',e=>{const b=e.target.closest('[data-case]');if(b){loadCase(Number(b.dataset.case));document.getElementById('scene').scrollIntoView({behavior:'smooth',block:'center'})}});
 document.getElementById('resetView').addEventListener('click',()=>{yaw=-.62;pitch=.62;zoom=1;draw()});

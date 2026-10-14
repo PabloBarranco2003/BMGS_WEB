@@ -115,23 +115,22 @@
             .hero-fade {
             position: absolute;
             left: 0; right: 0; bottom: 0;
-            height: 400px;                       /* antes: 220px → transición más larga y suave */
+            height: 400px;
             z-index: 1;
             pointer-events: none;
             background: linear-gradient(
                 180deg,
-                rgba(6, 9, 17, 0)       0%,      /* base oscura del hero */
+                rgba(6, 9, 17, 0)       0%,
                 rgba(6, 9, 17, 0.30)   16%,
                 rgba(8, 24, 40, 0.62)  34%,
-                rgba(12, 44, 68, 0.72) 52%,      /* azul profundo: se conserva más tiempo */
-                rgba(21, 74, 102, 0.58) 68%,     /* azul medio */
-                rgba(74, 138, 170, 0.32) 82%,    /* azul claro apagado */
-                rgba(186, 216, 231, 0.45) 92%,   /* gris azulado, casi blanco */
-                var(--bg-light)        100%      /* aterriza exacto en el blanco del <main> */
+                rgba(12, 44, 68, 0.72) 52%,
+                rgba(21, 74, 102, 0.58) 68%,
+                rgba(74, 138, 170, 0.32) 82%,
+                rgba(186, 216, 231, 0.45) 92%,
+                var(--bg-light)        100%
             );
         }
 
-        /* Halo azul sutil que refuerza la presencia del color de marca */
         .hero-fade::before {
             content: "";
             position: absolute;
@@ -217,7 +216,6 @@
         .feature-list i { color: var(--accent-deep); margin-top: 3px; font-size: 13px; }
 
         .screenshot-frame { border: 1px solid var(--border-light-strong); border-radius: var(--radius-md); overflow: hidden; background: var(--surface-light); box-shadow: 0 24px 60px -32px rgba(16, 24, 40, 0.28); }
-        /* Imagen real dentro del marco */
         .screenshot-frame img.shot {
             display: block;
             width: 100%;
@@ -629,6 +627,28 @@
         </div>
     </div>
 
+    <!-- ── MODAL AVISO ANTES DE DESCARGAR ──────── -->
+    <div class="modal-overlay" id="modal-descarga" role="dialog" aria-modal="true" aria-labelledby="descarga-titulo">
+      <div class="modal-box">
+        <button class="modal-close" data-close="modal-descarga" aria-label="Cerrar">✕</button>
+        <h2 id="descarga-titulo">Antes de descargar BMGS</h2>
+        <p class="modal-date">Software experimental · v1.2.0</p>
+
+        <p>BMGS es un programa de <strong>carácter experimental</strong>, pensado para investigación, aprendizaje y práctica técnica. Te recomendamos echar un vistazo a la sección de <strong>verificación numérica</strong> antes de usarlo en un caso real, para que veas cómo se comporta frente a AutoGrid Pro y qué limitaciones tiene.</p>
+
+        <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:1.8rem">
+          <a href="verificacion.html" class="btn btn-secondary-dark" style="flex:1;justify-content:center;min-width:200px">
+            <i class="fa-solid fa-chart-line"></i> Ver verificación
+          </a>
+          <button type="button" id="btn-aceptar-descarga" class="btn btn-primary" style="flex:1;justify-content:center;min-width:200px">
+            <i class="fa-solid fa-download"></i> Descargar
+          </button>
+        </div>
+
+        <p style="margin-top:1.4rem;font-size:0.78rem;color:var(--text-faint)">El EULA se acepta al ejecutar la aplicación por primera vez.</p>
+      </div>
+    </div>
+
     <footer>
         <p>&copy; 2026 Pablo Barranco &mdash; Ingeniero Eléctrico y Electrónico</p>
         <div class="footer-legal">
@@ -931,6 +951,34 @@
           }
         });
       });
+    </script>
+
+    <!-- ── AVISO PREVIO ANTES DE DESCARGAR ──────────────────────── -->
+    <script>
+      (() => {
+        const modalDescarga = document.getElementById('modal-descarga');
+        const btnAceptar    = document.getElementById('btn-aceptar-descarga');
+        const triggers      = document.querySelectorAll('a[href*="drive.google.com"], a[href$=".pdf"][download]');
+        let pendingUrl      = null;
+
+        triggers.forEach(btn => {
+          btn.addEventListener('click', (e) => {
+            e.preventDefault();
+            pendingUrl = btn.getAttribute('href');
+            modalDescarga.classList.add('active');
+            document.body.style.overflow = 'hidden';
+          });
+        });
+
+        btnAceptar.addEventListener('click', () => {
+          if (pendingUrl) {
+            window.open(pendingUrl, '_blank', 'noopener');
+          }
+          modalDescarga.classList.remove('active');
+          document.body.style.overflow = '';
+          pendingUrl = null;
+        });
+      })();
     </script>
 </body>
 </html>
